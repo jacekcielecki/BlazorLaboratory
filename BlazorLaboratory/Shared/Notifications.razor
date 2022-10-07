@@ -1,0 +1,70 @@
+﻿@using BlazorLaboratory.Dto
+@using BlazorLaboratory.Enum
+
+<MudBadge Dot="true" Visible="true" Color="Color.Info" Overlap="true" Class="mx-6 my-4 align-end">
+    <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" Color="Color.Inherit" aria-label="notifications" OnClick="@ToggleOpenNotifications" />
+    <MudPopover Open="@_isNotificationsPopoverOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Style="Width: 400px; min-height: 435px; max-height: 435px">
+        <MudListSubheader>
+            <div>
+                <MudText Align="Align.Left" Typo="Typo.h6" Class="d-inline align-left"><b>Notifications</b></MudText>
+            </div>
+        </MudListSubheader>
+        <MudDivider/>
+        @if (alerts.Any())
+        {
+            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px">
+                @foreach (var alert in alerts)
+                {
+                    <MudListItem>
+                        <MudText><b>This is some notification message</b></MudText>
+                        <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
+                    </MudListItem>
+                }
+            </MudList>
+        }
+        else
+        {
+            <MudText><b>There are no notifications. Come back later</b></MudText>
+        }
+        <MudDivider/>
+        <MudText Color="Color.Info" Class="px-2 pt-4 object-bottom">
+            <b>View all notifications</b>
+        </MudText>
+    </MudPopover>
+</MudBadge>
+
+@code {
+    bool _isNotificationsPopoverOpen = false;
+
+    List<MaintanceAlertDto> alerts = new List<MaintanceAlertDto>();
+    List<MaintanceAlertDto> dummyAlertDtos = new List<MaintanceAlertDto>()
+    {
+        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        alerts = dummyAlertDtos;
+    }
+
+    public void ToggleOpenNotifications()
+    {
+        if (_isNotificationsPopoverOpen)
+            _isNotificationsPopoverOpen = false;
+
+        else
+            _isNotificationsPopoverOpen = true;
+    }
+}
