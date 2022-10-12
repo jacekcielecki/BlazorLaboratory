@@ -12,14 +12,21 @@
         <MudDivider/>
         @if (alerts.Any())
         {
-            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px">
-                @foreach (var alert in alerts)
-                {
-                    <MudListItem>
-                        <MudText><b>This is some notification message</b></MudText>
-                        <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
-                    </MudListItem>
-                }
+            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px;">
+                <MudGrid Justify="Justify.FlexStart" Style="max-width: 360px">
+                    @foreach (var alert in alerts)
+                    {
+                        <MudItem xs="11">
+                            <MudListItem>
+                                <MudText><b>This is some notification message  This is some notification message This is some notification message</b></MudText>
+                                <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
+                            </MudListItem>
+                        </MudItem>
+                        <MudItem xs="1" Class="d-flex justify-start">
+                            <MudIconButton Icon="@Icons.Filled.Close" aria-label="delete" Size="Size.Small" Class="relative"></MudIconButton>
+                        </MudItem>
+                    }
+                </MudGrid>
             </MudList>
         }
         else
