@@ -1,0 +1,14 @@
+﻿@page "/overlay"
+
+<MudButton Variant="Variant.Filled" Color="Color.Tertiary" OnClick="OpenOverlay">Show Overlay</MudButton>
+
+<MudOverlay @bind-Visible="isVisible" DarkBackground="true" ZIndex="9999" AutoClose="true" />
+@code {
+    private bool isVisible;
+
+    public void OpenOverlay()
+    {
+        isVisible = true;
+        StateHasChanged();
+    }
+}

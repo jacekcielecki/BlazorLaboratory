@@ -4,9 +4,6 @@
     // iterate throw all `path` tags
     [].forEach.call(document.querySelectorAll('path.HI-map'), function (item) {
         // attach click event, you can read the URL from a attribute for example.
-        item.addEventListener('click', function () {
-            window.open('http://google.co.il')
-        });
 
         // attach mouseenter event
         item.addEventListener('mouseenter', function () {
