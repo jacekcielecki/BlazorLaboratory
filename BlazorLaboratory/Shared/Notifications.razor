@@ -10,15 +10,15 @@
             </div>
         </MudListSubheader>
         <MudDivider/>
-        @if (alerts.Any())
+        @if (_alerts.Any())
         {
-            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px;">
+            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px;" Dense="true">
                 <MudGrid Justify="Justify.FlexStart" Style="max-width: 360px">
-                    @foreach (var alert in alerts)
+                    @foreach (var alert in _alerts)
                     {
                         <MudItem xs="11">
                             <MudListItem>
-                                <MudText><b>This is some notification message  This is some notification message This is some notification message</b></MudText>
+                                <MudText><b>This is some notification message</b></MudText>
                                 <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
                             </MudListItem>
                         </MudItem>
@@ -43,27 +43,28 @@
 @code {
     bool _isNotificationsPopoverOpen = false;
 
-    List<MaintanceAlertDto> alerts = new List<MaintanceAlertDto>();
-    List<MaintanceAlertDto> dummyAlertDtos = new List<MaintanceAlertDto>()
+    List<NotificationDto> _alerts = new List<NotificationDto>();
+    List<NotificationDto> _dummyAlertDtos = new List<NotificationDto>()
     {
-        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
-        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
-        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
-        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
-        new MaintanceAlertDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
-        new MaintanceAlertDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
-        new MaintanceAlertDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 1, AlertDateTime = DateTime.Now, ObjectId = 1, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 2, AlertDateTime = DateTime.Now, ObjectId = 2, ObjectType = AlertType.Equipment },
+        new NotificationDto() { Id = 3, AlertDateTime = DateTime.Now, ObjectId = 3, ObjectType = AlertType.Area },
+        new NotificationDto() { Id = 4, AlertDateTime = DateTime.Now, ObjectId = 4, ObjectType = AlertType.Equipment },
 
     };
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        alerts = dummyAlertDtos;
+        _alerts = _dummyAlertDtos;
+        base.OnInitialized();
     }
 
     public void ToggleOpenNotifications()

@@ -2,7 +2,7 @@
 
 namespace BlazorLaboratory.Dto
 {
-    public class MaintanceAlertDto
+    public class NotificationDto
     {
         public int Id { get; set; }
         public DateTime AlertDateTime { get; set; }

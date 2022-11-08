@@ -1,5 +1,5 @@
 ﻿@page "/svg-map"
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
 <SvgMapTooltip />
 
@@ -267,7 +267,7 @@
 {
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        JSRuntime.InvokeVoidAsync("addEvents");
+        JsRuntime.InvokeVoidAsync("addEvents");
 
         return base.OnAfterRenderAsync(firstRender);
     }
