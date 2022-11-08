@@ -1,7 +1,7 @@
 ﻿@using BlazorLaboratory.Dto
 @using BlazorLaboratory.Enum
 
-<MudBadge Dot="true" Visible="true" Color="Color.Info" Overlap="true" Class="mx-6 my-4 align-end">
+<MudBadge Dot="true" Visible="true" Color="Color.Primary" Overlap="true" Class="mx-6 my-4 align-end">
     <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" Color="Color.Inherit" aria-label="notifications" OnClick="@ToggleOpenNotifications" />
     <MudPopover Open="@_isNotificationsPopoverOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopLeft" Style="Width: 400px; min-height: 435px; max-height: 435px">
         <MudListSubheader>
