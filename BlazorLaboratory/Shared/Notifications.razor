@@ -40,8 +40,11 @@
     </MudPopover>
 </MudBadge>
 
+<MudOverlay @bind-Visible="_isOverlayTriggered" DarkBackground="false" @onclick="ToggleOpenNotifications"/>
+
 @code {
     bool _isNotificationsPopoverOpen = false;
+    bool _isOverlayTriggered = false;
 
     List<NotificationDto> _alerts = new List<NotificationDto>();
     List<NotificationDto> _dummyAlertDtos = new List<NotificationDto>()
@@ -70,9 +73,17 @@
     public void ToggleOpenNotifications()
     {
         if (_isNotificationsPopoverOpen)
+        {
             _isNotificationsPopoverOpen = false;
+            _isOverlayTriggered = false;
+        }
 
         else
+        {
             _isNotificationsPopoverOpen = true;
+            _isOverlayTriggered = true;
+
+        }
     }
+
 }
