@@ -1,4 +1,5 @@
 using BlazorLaboratory;
+using BlazorLaboratory.BlazorUI;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;

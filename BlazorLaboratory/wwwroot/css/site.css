@@ -1,0 +1,7 @@
+﻿.mud-alert.feedback div .mud-alert-icon {
+    align-items: center;
+}
+
+.mud-alert.feedback div b.contact {
+    cursor: pointer;
+}
