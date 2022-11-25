@@ -1,7 +1,18 @@
-﻿.mud-alert.feedback div .mud-alert-icon {
+﻿.mud-alert.feedback div .mud-alert-icon .mud-svg-icon {
     align-items: center;
+    font-size: 18px;
 }
 
 .mud-alert.feedback div b.contact {
     cursor: pointer;
+}
+
+.mud-alert.feedback div {
+    align-items: center;
+    font-size: 11px;
+}
+
+.mud-alert.feedback {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
