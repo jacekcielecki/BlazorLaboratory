@@ -7,11 +7,11 @@ public static class Api
     public static void ConfigureApi(this WebApplication app)
     {
         //All of endpoint mapping 
-        app.MapGet("/Users", GetUsers);
-        app.MapGet("/Users/{id}", GetUser);
-        app.MapPost("/Users", InsertUser);
-        app.MapPut("/Users", UpdateUser);
-        app.MapDelete("/Users", DeleteUser);
+        app.MapGet("api/Users", GetUsers);
+        app.MapGet("api/Users/{id}", GetUser);
+        app.MapPost("api/Users", InsertUser);
+        app.MapPut("api/Users", UpdateUser);
+        app.MapDelete("api/Users", DeleteUser);
     }
 
     private static async Task<IResult> GetUsers(IUserData data)
