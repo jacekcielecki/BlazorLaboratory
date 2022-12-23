@@ -3,7 +3,7 @@ using BlazorLaboratory.DataAccess.Models;
 
 namespace BlazorLaboratory.DataAccess.Data;
 
-public class UserData
+public class UserData : IUserData
 {
     private readonly ISqlDataAccess _db;
 

@@ -1,5 +1,11 @@
 ﻿@page "/dapper"
 
-@code {
-
+@if (_users is not null)
+{
+    <ul>
+        @foreach (var user in _users)
+        {
+            <li>@user.FirstName</li>
+        }
+    </ul>
 }

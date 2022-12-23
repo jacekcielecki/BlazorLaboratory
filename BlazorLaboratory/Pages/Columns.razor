@@ -1,5 +1,7 @@
 ﻿@page "/columns"
-@using BlazorLaboratory.BlazorUI.Dto
+@using BlazorLaboratory.Dto
+@using BlazorLaboratory.BlazorUI.Shared;
+
 <h3>Columns</h3>
 <br/>
 
@@ -30,14 +32,10 @@
 
 </MudList>
 
-<MudAlert Severity="Severity.Normal" Icon="@Icons.Outlined.Info" Class="feedback">
-    <div> Have some extra info? <br> <b class="contact"> Contact owner </b></div>
-</MudAlert>
 
 
 
-
-<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" MultiSelection="true" 
+<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" MultiSelection="true"
            @bind-Value="value" @bind-SelectedValues="options" T="string" Label="US States" AdornmentIcon="@Icons.Material.Filled.Search" AnchorOrigin="Origin.BottomCenter">
     @foreach (var state in states)
     {
@@ -45,25 +43,10 @@
     }
 </MudSelect>
 
-<MudSwitch @bind-Checked="multiselectionTextChoice" Class="mud-width-full" Color="Color.Primary">MultiSelection Text choice</MudSwitch>
 
-<MudGrid Class="mt-3 px-4">
-    <MudItem xs="6">
-        <MudText Typo="Typo.subtitle2">Value:</MudText>
-        <MudText Typo="Typo.subtitle2">"</MudText>
-        <MudText Typo="Typo.body2" Class="pl-4">@value</MudText>
-        <MudText Typo="Typo.subtitle2">"</MudText>
-    </MudItem>
-    <MudItem xs="6">
-        <MudText Typo="Typo.subtitle2">SelectedValues: HashSet&lt;string&gt;</MudText>
-        <MudText Typo="Typo.subtitle2">{</MudText>
-        <MudText Typo="Typo.body2" Class="pl-4">@(string.Join(", ", options.Select(x => $"\"{x}\"")))</MudText>
-        <MudText Typo="Typo.subtitle2">}</MudText>
-    </MudItem>
-</MudGrid>
 
 @code {
-    private bool multiselectionTextChoice;
+
     private string value { get; set; } = "Nothing selected";
     private IEnumerable<string> options { get; set; } = new HashSet<string>() { "Alaska" };
 
@@ -82,17 +65,6 @@
 
     private string GetMultiSelectionText(List<string> selectedValues)
     {
-        if (multiselectionTextChoice)
-        {
-            return $"Selected state{(selectedValues.Count > 1 ? "s" : "")}: {string.Join(", ", selectedValues.Select(x => x))}";
-        }
-        else if (selectedValues.Count == states.Length)
-        {
-            return "All";
-        }
-        else
-        {
-            return $"{selectedValues.Count} state{(selectedValues.Count > 1 ? "s have" : " has")} been selected";
-        }
+        return AllKeywords.Count() == selectedValues.Count ? "All" : string.Join(", ", selectedValues);
     }
 }
