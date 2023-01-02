@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\BlazorLaboratory.DataAccess.csproj" />
+    <ProjectReference Include="..\BlazorLaboratory.DataAccess\BlazorLaboratory.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
