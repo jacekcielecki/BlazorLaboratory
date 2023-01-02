@@ -2,10 +2,24 @@
 
 @if (_users is not null)
 {
-    <ul>
+    <table class="table-auto">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach (var user in _users)
         {
-            <li>@user.FirstName</li>
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+            </tr>
         }
-    </ul>
+        </tbody>
+    </table>
 }

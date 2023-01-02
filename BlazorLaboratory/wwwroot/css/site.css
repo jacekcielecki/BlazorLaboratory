@@ -16,3 +16,48 @@
     padding-top: 0px;
     padding-bottom: 0px;
 }
+
+
+#parent {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border: 2px solid blue;
+    position: relative;
+}
+
+#div1 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: green;
+    width: 100px;
+    height: 100px;
+}
+
+#div2 {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: red;
+}
+
+#div3 {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: yellow;
+}
+
+#div4 {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: gray;
+}
