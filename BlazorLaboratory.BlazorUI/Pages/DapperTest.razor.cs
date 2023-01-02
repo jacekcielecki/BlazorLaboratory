@@ -6,7 +6,7 @@ namespace BlazorLaboratory.BlazorUI.Pages;
 
 public partial class DapperTest
 {
-    [Inject] private IUserClient UserClient { get; set; }
+    [Inject] private IUserClient UserClient { get; set; } = null!;
 
     private List<UserDto>? _users;
 
