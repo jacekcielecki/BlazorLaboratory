@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapHub<ChatHub>("/chathub");
+app.MapHub<CounterHub>("/counterhub");
 app.UseCors("OpenCorsPolicy");
 app.ConfigureApi();
 

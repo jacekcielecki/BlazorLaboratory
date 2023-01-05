@@ -1,17 +1,59 @@
 ﻿@page "/counter"
+@inject NavigationManager NavManager
+@using Microsoft.AspNetCore.SignalR.Client
+@implements IAsyncDisposable
 
 <PageTitle>Counter</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Counter</MudText>
-<MudText Class="mb-4">Current count: @currentCount</MudText>
-<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Click me</MudButton>
+<MudText Class="mb-4">Current count: @_currentCount</MudText>
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount" Disabled="@(!IsConnected)">Click me</MudButton>
 
 
 @code {
-    private int currentCount = 0;
+    private int _currentCount = 0;
+    private HubConnection? _hubConnection;
+    private readonly string _blazorServerUrl = "https://localhost:7195/counterhub";
+    private readonly string _webApiUri = "https://localhost:7234/counterhub";
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
-        currentCount++;
+        if (_hubConnection is not null)
+            await _hubConnection.InvokeAsync("AddToTotal", "DummyName", 1);
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavManager.ToAbsoluteUri(_webApiUri))
+            .WithAutomaticReconnect()
+            .Build();
+
+        _hubConnection.On<string, int>("CounterIncrement", (user, value) =>
+        {
+            _currentCount += value;
+            InvokeAsync(StateHasChanged);
+        });
+
+        try
+        {
+            await _hubConnection.StartAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public bool IsConnected => _hubConnection?.State == HubConnectionState.Connected;
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.DisposeAsync();
+        }
+    }
+
 }
