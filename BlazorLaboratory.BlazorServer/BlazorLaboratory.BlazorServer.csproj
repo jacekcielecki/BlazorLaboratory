@@ -8,11 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BlazorLaboratory.DataAccess\BlazorLaboratory.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
