@@ -30,12 +30,14 @@
     private List<string> _messagess = new();
     private string? _userInput;
     private string? _messageInput;
+    private string? _blazorServerUrl = "https://localhost:7195/chathub";
+    private string? _webApiUri = "https://localhost:7234/chathub";
 
     protected override async Task OnInitializedAsync()
     {
     //Setup connection to the server
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:7195/chathub")
+            .WithUrl(_webApiUri)
             .WithAutomaticReconnect()
             .Build();
 

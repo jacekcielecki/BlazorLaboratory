@@ -1,10 +1,18 @@
 using BlazorLaboratory.DataAccess.Data;
 using BlazorLaboratory.WebApi;
+using BlazorLaboratory.WebApi.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddResponseCompression(options =>
+{
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("OpenCorsPolicy", opt =>
@@ -25,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapHub<ChatHub>("/chathub");
 app.UseCors("OpenCorsPolicy");
 app.ConfigureApi();
 
