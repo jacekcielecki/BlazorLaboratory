@@ -2,6 +2,7 @@
 @inject NavigationManager NavManager
 @using Microsoft.AspNetCore.SignalR.Client
 @implements IAsyncDisposable
+@inject ISnackbar Snackbar
 
 <PageTitle>Counter</PageTitle>
 
@@ -33,6 +34,11 @@
         {
             _currentCount += value;
             InvokeAsync(StateHasChanged);
+        });
+
+        _hubConnection.On("CounterIncrementConfirmation", () =>
+        {
+            Snackbar.Add("Counter increment confirmation", Severity.Info);
         });
 
         try

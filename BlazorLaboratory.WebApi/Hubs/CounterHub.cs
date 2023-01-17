@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Hangfire;
+using Microsoft.AspNetCore.SignalR;
+using BlazorLaboratory.WebApi.Helpers;
 
 namespace BlazorLaboratory.WebApi.Hubs;
 
 public class CounterHub : Hub
 {
-    public Task AddToTotal(string user, int value)
+    public async Task AddToTotal(string user, int value)
     {
-        return Clients.All.SendAsync("CounterIncrement", user, value);
+        await Clients.All.SendAsync("CounterIncrement", user, value);
+        BackgroundJob.Schedule<CounterHubHelper>(h => h.ConfirmIncrementCounter(), TimeSpan.FromSeconds(3));
     }
+
 }
