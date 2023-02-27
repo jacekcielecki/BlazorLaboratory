@@ -1,4 +1,5 @@
 ﻿using BlazorLaboratory.DataAccess.Data;
+using BlazorLaboratory.DataAccess.Repositories;
 
 namespace BlazorLaboratory.WebApi;
 
@@ -14,9 +15,10 @@ public static class Api
         app.MapDelete("api/Users", DeleteUser);
     }
 
-    private static async Task<IResult> GetUsers(IUserData data)
+    private static async Task<IResult> GetUsers(IUserDataRepository data)
     {
-        return Results.Ok(await data.GetUsers());
+        //return Results.Ok(await data.GetUsers());
+        return Results.Ok(await data.GetAll());
     }
     private static async Task<IResult> GetUser(int id, IUserData data)
     {

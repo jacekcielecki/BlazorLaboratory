@@ -1,4 +1,5 @@
 using BlazorLaboratory.DataAccess.Data;
+using BlazorLaboratory.DataAccess.Repositories;
 using BlazorLaboratory.WebApi;
 using BlazorLaboratory.WebApi.Helpers;
 using BlazorLaboratory.WebApi.Hubs;
@@ -24,6 +25,7 @@ builder.Services.AddCors(policy =>
 });
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IUserData, UserData>();
+builder.Services.AddScoped<IUserDataRepository, UserDataRepository>();
 builder.Services.AddSingleton<ICounterHubHelper, CounterHubHelper>();
 
 builder.Services.AddHangfire(config => config
