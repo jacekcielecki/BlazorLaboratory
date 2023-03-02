@@ -67,3 +67,12 @@
     padding-bottom: 5px !important;
     background: aliceblue;
 }
+
+.blue-background {
+    border: black;
+    border-style: solid;
+}
+
+.value-select {
+    max-width: 200px;
+}

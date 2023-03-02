@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9295A8B2-A22
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AB3A32E9-110C-4CD5-A92F-F35505BCF2AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorLaboratory.WebApi.Tests", "BlazorLaboratory.WebApi.Tests\BlazorLaboratory.WebApi.Tests.csproj", "{80DE05A4-F318-4211-9C55-5A1A6B54EBFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLaboratory.WebApi.Tests", "BlazorLaboratory.WebApi.Tests\BlazorLaboratory.WebApi.Tests.csproj", "{80DE05A4-F318-4211-9C55-5A1A6B54EBFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
