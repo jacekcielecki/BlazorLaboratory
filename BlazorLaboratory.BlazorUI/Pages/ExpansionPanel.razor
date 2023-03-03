@@ -1,9 +1,13 @@
 ﻿@page "/ExpansionTable"
-<style>
-    .mud-table-cell-custom-group {
-        font-weight: 500;
-    }
-</style>
+
+<MudButtonGroup Color="Color.Dark" Variant="Variant.Outlined" Size="Size.Small">
+    <MudButton id="double-button-left">
+        <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Small" />&nbsp; Add</MudButton>
+    <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" id="double-button-right" AnchorOrigin="Origin.BottomLeft">
+        <MudMenuItem>User</MudMenuItem>
+        <MudMenuItem>Group</MudMenuItem>
+    </MudMenu>
+</MudButtonGroup>
 
 <MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
           Items="@Elements"
@@ -63,6 +67,4 @@
         new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L3", Role = "Admin"},
         new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L4", Role = "Admin"},
     };
-
-
 }

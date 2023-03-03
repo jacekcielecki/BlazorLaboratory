@@ -76,3 +76,16 @@
 .value-select {
     max-width: 200px;
 }
+
+.mud-table-cell-custom-group {
+    font-weight: 500;
+}
+
+#double-button-left {
+    border-radius: 80px 0 0 80px;
+    text-transform: none !important;
+}
+
+#double-button-right .mud-button-root {
+    border-radius: 0 80px 80px 0;
+}
