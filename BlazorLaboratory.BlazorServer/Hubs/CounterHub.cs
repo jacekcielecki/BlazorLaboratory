@@ -1,8 +1,9 @@
-﻿using Hangfire;
+﻿using BlazorLaboratory.BlazorServer.Helpers;
+using Hangfire;
 using Microsoft.AspNetCore.SignalR;
-using BlazorLaboratory.WebApi.Helpers;
 
-namespace BlazorLaboratory.WebApi.Hubs;
+
+namespace BlazorLaboratory.BlazorServer.Hubs;
 
 public class CounterHub : Hub
 {

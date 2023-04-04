@@ -1,6 +1,8 @@
 using BlazorLaboratory.BlazorServer.Data;
 using BlazorLaboratory.BlazorServer.Hubs;
+using Hangfire;
 using Microsoft.AspNetCore.ResponseCompression;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddMudServices();
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -24,6 +27,13 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+
+builder.Services.AddHangfire(config => config
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddHangfireServer();
+
 
 var app = builder.Build();
 
@@ -44,6 +54,7 @@ app.UseCors("CorsPolicy");
 
 app.MapBlazorHub();
 app.MapHub<ChatHub>("/chathub");
+app.MapHub<CounterHub>("/counterhub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();

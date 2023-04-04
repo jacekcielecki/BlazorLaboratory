@@ -13,20 +13,13 @@
         @if (_alerts.Any())
         {
             <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px;" Dense="true">
-                <MudGrid Justify="Justify.FlexStart" Style="max-width: 360px">
-                    @foreach (var alert in _alerts)
-                    {
-                        <MudItem xs="11">
-                            <MudListItem>
-                                <MudText><b>This is some notification message</b></MudText>
-                                <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
-                            </MudListItem>
-                        </MudItem>
-                        <MudItem xs="1" Class="d-flex justify-start">
-                            <MudIconButton Icon="@Icons.Filled.Close" aria-label="delete" Size="Size.Small" Class="relative"></MudIconButton>
-                        </MudItem>
-                    }
-                </MudGrid>
+                @foreach (var alert in _alerts)
+                {
+                    <MudListItem class="notification-item">
+                        <MudText><b>This is some notification message</b></MudText>
+                        <MudText>@alert.ObjectType, @alert.AlertDateTime</MudText>
+                    </MudListItem>
+                }
             </MudList>
         }
         else
@@ -72,18 +65,8 @@
 
     public void ToggleOpenNotifications()
     {
-        if (_isNotificationsPopoverOpen)
-        {
-            _isNotificationsPopoverOpen = false;
-            _isOverlayTriggered = false;
-        }
-
-        else
-        {
-            _isNotificationsPopoverOpen = true;
-            _isOverlayTriggered = true;
-
-        }
+        _isNotificationsPopoverOpen = !_isNotificationsPopoverOpen;
+        _isOverlayTriggered = !_isNotificationsPopoverOpen;
     }
 
 }

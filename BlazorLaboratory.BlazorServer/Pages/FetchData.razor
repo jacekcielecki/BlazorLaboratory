@@ -8,6 +8,7 @@
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
+<button @onclick="Func1">Func1</button>
 
 @if (forecasts == null)
 {
@@ -25,24 +26,53 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
-            {
+            <Virtualize ItemsProvider="LoadForecasts" Context="forecast" @ref="ForecastsList">
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
+                    @if (forecast.TemperatureC > 20)
+                    {
+                        <td><b>@forecast.TemperatureC</b></td>
+                    }
+                    else
+                    {
+                        <td>@forecast.TemperatureC</td>
+                    }
                     <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
                 </tr>
-            }
+            </Virtualize>
         </tbody>
     </table>
 }
 
 @code {
     private WeatherForecast[]? forecasts;
+    private int _totalForecasts;
+    private bool _isFirstRequest = true;
+    public Virtualize<WeatherForecast> ForecastsList { get; set; }
+
+    private async ValueTask<ItemsProviderResult<WeatherForecast>> LoadForecasts(ItemsProviderRequest request)
+    {
+        if (_isFirstRequest)
+        {
+            forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+            _totalForecasts = forecasts.Length;
+            _isFirstRequest = false;
+        }
+
+        var dataToDisplay = forecasts.Skip(request.StartIndex).Take(request.Count);
+        return new ItemsProviderResult<WeatherForecast>(dataToDisplay, _totalForecasts);
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+    private async Task Func1()
+    {
+        var a = (Virtualize<WeatherForecast>)ForecastsList;
+        await a.RefreshDataAsync();
     }
 }
