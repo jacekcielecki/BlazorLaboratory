@@ -13,6 +13,9 @@ public static class Api
         app.MapPost("api/Users", InsertUser);
         app.MapPut("api/Users", UpdateUser);
         app.MapDelete("api/Users", DeleteUser);
+
+        app.MapGet("api/UserGroups", GetUserGroups);
+        app.MapPost("api/UserGroups", InsertUserGroup);
     }
 
     private static async Task<IResult> GetUsers(IUserDataRepository data)
@@ -20,6 +23,7 @@ public static class Api
         //return Results.Ok(await data.GetUsers());
         return Results.Ok(await data.GetAll());
     }
+
     private static async Task<IResult> GetUser(int id, IUserData data)
     {
         var results = await data.GetUser(id);
@@ -41,6 +45,17 @@ public static class Api
     private static async Task<IResult> DeleteUser(int id, IUserData data)
     {
         await data.DeleteUser(id);
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> GetUserGroups(IUserGroupRepository data)
+    {
+        return Results.Ok(await data.GetAll());
+    }
+
+    private static async Task<IResult> InsertUserGroup(IUserGroupRepository data, UserGroupModel item)
+    {
+        await data.InsertAsync(item);
         return Results.Ok();
     }
 }

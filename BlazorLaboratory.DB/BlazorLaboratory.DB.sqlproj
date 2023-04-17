@@ -83,6 +83,8 @@
     <Build Include="HangFire\Tables\Job.sql" />
     <Build Include="HangFire\Tables\Schema.sql" />
     <Build Include="Security\HangFire.sql" />
+    <Build Include="dbo\Tables\UserGroup.sql" />
+    <Build Include="dbo\Tables\UserGroupUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Script.PostDeployment.sql" />

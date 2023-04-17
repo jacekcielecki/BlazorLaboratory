@@ -26,6 +26,7 @@ builder.Services.AddCors(policy =>
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IUserData, UserData>();
 builder.Services.AddScoped<IUserDataRepository, UserDataRepository>();
+builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 builder.Services.AddSingleton<ICounterHubHelper, CounterHubHelper>();
 
 builder.Services.AddHangfire(config => config
