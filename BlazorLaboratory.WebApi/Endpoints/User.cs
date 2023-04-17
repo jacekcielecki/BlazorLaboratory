@@ -1,26 +1,21 @@
 ﻿using BlazorLaboratory.DataAccess.Data;
 using BlazorLaboratory.DataAccess.Repositories;
 
-namespace BlazorLaboratory.WebApi;
+namespace BlazorLaboratory.WebApi.Endpoints;
 
-public static class Api
+public static class User
 {
-    public static void ConfigureApi(this WebApplication app)
+    public static void ConfigureUserEndpoints(this WebApplication app)
     {
-        //All of endpoint mapping 
-        app.MapGet("api/Users", GetUsers);
-        app.MapGet("api/Users/{id}", GetUser);
-        app.MapPost("api/Users", InsertUser);
-        app.MapPut("api/Users", UpdateUser);
-        app.MapDelete("api/Users", DeleteUser);
-
-        app.MapGet("api/UserGroups", GetUserGroups);
-        app.MapPost("api/UserGroups", InsertUserGroup);
+        app.MapGet("api/User", GetUsers);
+        app.MapGet("api/User/{id}", GetUser);
+        app.MapPost("api/User", InsertUser);
+        app.MapPut("api/User", UpdateUser);
+        app.MapDelete("api/User", DeleteUser);
     }
 
     private static async Task<IResult> GetUsers(IUserDataRepository data)
     {
-        //return Results.Ok(await data.GetUsers());
         return Results.Ok(await data.GetAll());
     }
 
@@ -45,17 +40,6 @@ public static class Api
     private static async Task<IResult> DeleteUser(int id, IUserData data)
     {
         await data.DeleteUser(id);
-        return Results.Ok();
-    }
-
-    private static async Task<IResult> GetUserGroups(IUserGroupRepository data)
-    {
-        return Results.Ok(await data.GetAll());
-    }
-
-    private static async Task<IResult> InsertUserGroup(IUserGroupRepository data, UserGroupModel item)
-    {
-        await data.InsertAsync(item);
         return Results.Ok();
     }
 }

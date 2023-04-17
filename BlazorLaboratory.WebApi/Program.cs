@@ -1,6 +1,6 @@
 using BlazorLaboratory.DataAccess.Data;
 using BlazorLaboratory.DataAccess.Repositories;
-using BlazorLaboratory.WebApi;
+using BlazorLaboratory.WebApi.Endpoints;
 using BlazorLaboratory.WebApi.Helpers;
 using BlazorLaboratory.WebApi.Hubs;
 using Hangfire;
@@ -50,6 +50,7 @@ app.MapHangfireDashboard();
 app.MapHub<CounterHub>("/counterhub");
 app.MapHub<ChatHub>("/chathub");
 app.UseCors("OpenCorsPolicy");
-app.ConfigureApi();
+app.ConfigureUserEndpoints();
+app.ConfigureUserGroupEndpoints();
 
 app.Run();
