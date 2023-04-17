@@ -1,6 +1,6 @@
 ﻿using BlazorLaboratory.DataAccess.Models;
 
-namespace BlazorLaboratory.DataAccess.Data;
+namespace BlazorLaboratory.DataAccess.Contracts;
 
 public interface IUserData
 {

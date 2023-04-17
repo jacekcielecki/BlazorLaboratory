@@ -1,5 +1,4 @@
-﻿
-namespace BlazorLaboratory.DataAccess.DbAccess;
+﻿namespace BlazorLaboratory.DataAccess.Contracts;
 
 public interface ISqlDataAccess
 {

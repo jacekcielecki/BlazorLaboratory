@@ -1,4 +1,4 @@
-﻿using BlazorLaboratory.DataAccess.DbAccess;
+﻿using BlazorLaboratory.DataAccess.Contracts;
 using BlazorLaboratory.DataAccess.Models;
 
 namespace BlazorLaboratory.DataAccess.Data;

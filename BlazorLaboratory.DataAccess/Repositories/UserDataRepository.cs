@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using BlazorLaboratory.DataAccess.Contracts;
 
 namespace BlazorLaboratory.DataAccess.Repositories;
 public class UserDataRepository : IUserDataRepository

@@ -1,3 +1,4 @@
+using BlazorLaboratory.DataAccess.Contracts;
 using BlazorLaboratory.DataAccess.Data;
 using BlazorLaboratory.DataAccess.Repositories;
 using BlazorLaboratory.WebApi.Endpoints;

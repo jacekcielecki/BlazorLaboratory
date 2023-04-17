@@ -1,6 +1,6 @@
 ﻿using BlazorLaboratory.DataAccess.Models;
 
-namespace BlazorLaboratory.DataAccess.Repositories;
+namespace BlazorLaboratory.DataAccess.Contracts;
 public interface IUserDataRepository
 {
     Task<IEnumerable<UserModel>> GetAll();
