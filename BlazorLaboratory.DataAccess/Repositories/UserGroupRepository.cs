@@ -109,9 +109,12 @@ public class UserGroupRepository : IUserGroupRepository
         }, commandType: CommandType.Text);
     }
 
-    public Task DeleteAsync(UserGroupModel item)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+        const string sql = @"DELETE FROM [dbo].[UserGroup] WHERE [Id] = @Id";
+
+        await db.ExecuteAsync(sql, new { Id = id }, commandType: CommandType.Text);
     }
 
     public Task AddItemAsync(Guid userId)

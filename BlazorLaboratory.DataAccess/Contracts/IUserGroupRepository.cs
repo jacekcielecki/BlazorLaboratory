@@ -6,7 +6,7 @@ public interface IUserGroupRepository
     Task<IEnumerable<UserGroupModel>> GetAllAsync();
     Task InsertAsync(UserGroupModel item);
     Task UpdateAsync(UserGroupModel item);
-    Task DeleteAsync(UserGroupModel item);
+    Task DeleteAsync(Guid id);
     Task<UserGroupModel> GetByIdAsync(Guid id);
     Task AddItemAsync(Guid userId);
     Task RemoveItemAsync(Guid userId);
