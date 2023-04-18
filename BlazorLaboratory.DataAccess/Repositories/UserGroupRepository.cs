@@ -15,7 +15,7 @@ public class UserGroupRepository : IUserGroupRepository
         _config = config;
     }
 
-    public async Task<IEnumerable<UserGroupModel>> GetAll()
+    public async Task<IEnumerable<UserGroupModel>> GetAllAsync()
     {
         using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
 
@@ -48,6 +48,31 @@ public class UserGroupRepository : IUserGroupRepository
         return result;
     }
 
+    public async Task<UserGroupModel> GetByIdAsync(Guid id)
+    {
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+
+        const string sql = @"SELECT ug.*, cr.*, md.*, u.*
+                             FROM [UserGroup] ug
+                             LEFT JOIN [dbo].[User] cr on ug.[CreatorId] = cr.[Id]
+                             LEFT JOIN [dbo].[User] md on ug.[ModeratorId] = md.[Id]
+                             LEFT JOIN [UserGroupUser] ugu ON ugu.UserGroupId = ug.Id
+                             LEFT JOIN [User] u ON u.Id = ugu.UserId
+                             WHERE ug.[Id] = @Id";
+
+        var result = await db.QueryAsync<UserGroupModel, UserModel, UserModel, UserModel, UserGroupModel>(sql,  (groups, creator, moderator, user) =>
+        {
+            groups.Creator = creator;
+            groups.Moderator = moderator;
+            if (user is null) return groups;
+            groups.Users ??= new List<UserModel>();
+            groups.Users.Add(user);
+            return groups;
+        }, new { Id = id }, splitOn: "Id", commandType: CommandType.Text);
+
+       return result.FirstOrDefault()!;
+    }
+
     public async Task InsertAsync(UserGroupModel item)
     {
         using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
@@ -62,5 +87,40 @@ public class UserGroupRepository : IUserGroupRepository
             item.CreatorId,
             item.ModeratorId
         }, commandType: CommandType.Text);
+    }
+
+    public async Task UpdateAsync(UserGroupModel item)
+    {
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+        const string sql = @"UPDATE [dbo].[UserGroup] 
+                                SET [Name] = @Name 
+                                   ,[Description] = @Description
+                                   ,[CreatorId] = @CreatorId
+                                   ,[ModeratorId] = @ModeratorId
+                                WHERE [Id] = @Id";
+
+        await db.ExecuteAsync(sql, new
+        {
+            item.Name,
+            item.Description,
+            item.CreatorId,
+            item.ModeratorId,
+            item.Id
+        }, commandType: CommandType.Text);
+    }
+
+    public Task DeleteAsync(UserGroupModel item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task AddItemAsync(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task RemoveItemAsync(Guid userId)
+    {
+        throw new NotImplementedException();
     }
 }

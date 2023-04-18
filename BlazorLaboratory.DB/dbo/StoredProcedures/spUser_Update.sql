@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spUser_Update]
-	@Id int,
+	@Id UNIQUEIDENTIFIER,
 	@FirstName nvarchar(50),
 	@LastName nvarchar(50)
 AS

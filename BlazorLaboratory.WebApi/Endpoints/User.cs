@@ -7,10 +7,10 @@ public static class User
     public static void ConfigureUserEndpoints(this WebApplication app)
     {
         app.MapGet("api/User", GetUsers);
-        app.MapGet("api/User/{id}", GetUser);
+        app.MapGet("api/User/{id:Guid}", GetUser);
         app.MapPost("api/User", InsertUser);
         app.MapPut("api/User", UpdateUser);
-        app.MapDelete("api/User", DeleteUser);
+        app.MapDelete("api/User/{id:Guid}", DeleteUser);
     }
 
     private static async Task<IResult> GetUsers(IUserDataRepository data)
@@ -18,7 +18,7 @@ public static class User
         return Results.Ok(await data.GetAll());
     }
 
-    private static async Task<IResult> GetUser(int id, IUserData data)
+    private static async Task<IResult> GetUser(Guid id, IUserData data)
     {
         var results = await data.GetUser(id);
         return results is null ? Results.NotFound() : Results.Ok(results);
@@ -36,7 +36,7 @@ public static class User
         return Results.Ok();
     }
 
-    private static async Task<IResult> DeleteUser(int id, IUserData data)
+    private static async Task<IResult> DeleteUser(Guid id, IUserData data)
     {
         await data.DeleteUser(id);
         return Results.Ok();

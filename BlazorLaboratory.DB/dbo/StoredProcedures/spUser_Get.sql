@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spUser_Get]
-	@Id int
+	@Id UNIQUEIDENTIFIER
 AS
 begin
 	select Id, FirstName, LastName
