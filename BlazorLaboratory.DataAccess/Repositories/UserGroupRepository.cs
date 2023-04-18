@@ -117,13 +117,23 @@ public class UserGroupRepository : IUserGroupRepository
         await db.ExecuteAsync(sql, new { Id = id }, commandType: CommandType.Text);
     }
 
-    public Task AddItemAsync(Guid userId)
+    public async Task AddItemAsync(Guid userId, Guid groupId)
     {
-        throw new NotImplementedException();
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+        const string sql = @"INSERT INTO [dbo].[UserGroupUser] 
+                                ([UserGroupId], [UserId])
+                                VALUES (@GroupId, @UserId)";
+
+        await db.ExecuteAsync(sql, new { UserId = userId, GroupId = groupId }, commandType: CommandType.Text);
     }
 
-    public Task RemoveItemAsync(Guid userId)
+    public async Task RemoveItemAsync(Guid userId, Guid groupId)
     {
-        throw new NotImplementedException();
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+        const string sql = @"DELETE FROM [dbo].[UserGroupUser] 
+                                WHERE [UserGroupId] = @GroupId
+                                AND [UserId] = @UserId";
+
+        await db.ExecuteAsync(sql, new { UserId = userId, GroupId = groupId }, commandType: CommandType.Text);
     }
 }

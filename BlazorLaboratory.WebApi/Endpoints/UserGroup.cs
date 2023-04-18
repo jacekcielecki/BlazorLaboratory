@@ -11,6 +11,8 @@ public static class UserGroup
         app.MapPost("api/UserGroup", InsertUserGroup);
         app.MapPut("api/UserGroup", UpdateUserGroup);
         app.MapDelete("api/UserGroup/{id:Guid}", DeleteUserGroup);
+        app.MapPut("api/UserGroup/Add/{userId:Guid}/{groupId:Guid}", AddUserToGroup);
+        app.MapPut("api/UserGroup/Remove/{userId:Guid}/{groupId:Guid}", RemoveUserFromGroup);
     }
 
     private static async Task<IResult> GetAllUserGroup(IUserGroupRepository data)
@@ -39,6 +41,18 @@ public static class UserGroup
     private static async Task<IResult> DeleteUserGroup(IUserGroupRepository data, Guid id)
     {
         await data.DeleteAsync(id);
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> AddUserToGroup(IUserGroupRepository data, Guid userId, Guid groupId)
+    {
+        await data.AddItemAsync(userId, groupId);
+        return Results.Ok();
+    }
+    
+    private static async Task<IResult> RemoveUserFromGroup(IUserGroupRepository data, Guid userId, Guid groupId)
+    {
+        await data.RemoveItemAsync(userId, groupId);
         return Results.Ok();
     }
 }
