@@ -5,5 +5,6 @@
     [UserId] UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [PK_UserGroupUser] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_UserGroupUser_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] (Id),
-    CONSTRAINT [FK_UserGroupUser_UserGroup] FOREIGN KEY ([UserGroupId]) REFERENCES [dbo].[UserGroup] (Id)
+    CONSTRAINT [FK_UserGroupUser_UserGroup] FOREIGN KEY ([UserGroupId]) REFERENCES [dbo].[UserGroup] (Id),
+    CONSTRAINT [UQ_UserGroupUser_UserGroupId_UserId] UNIQUE ([UserId], [UserGroupId])
 )

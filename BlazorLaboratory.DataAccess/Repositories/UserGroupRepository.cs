@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Dapper;
 using BlazorLaboratory.DataAccess.Contracts;
+using System.Text.RegularExpressions;
 
 namespace BlazorLaboratory.DataAccess.Repositories;
 public class UserGroupRepository : IUserGroupRepository
@@ -26,20 +27,19 @@ public class UserGroupRepository : IUserGroupRepository
                                     LEFT JOIN [UserGroupUser] ugu ON ugu.UserGroupId = ug.Id
                                     LEFT JOIN [User] u ON u.Id = ugu.UserId";
 
-        var groups = await db.QueryAsync<UserGroupModel, UserModel, UserModel, UserModel, UserGroupModel>(sql, (groups, creator, moderator, user) =>
+        var groups = await db.QueryAsync<UserGroupModel, UserModel, UserModel, UserModel, UserGroupModel>(sql, (groups, creator, moderator, users) =>
         {
             groups.Creator = creator;
             groups.Moderator = moderator;
-            if (user is null) return groups;
-            groups.Users ??= new List<UserModel>();
-            groups.Users.Add(user);
+            groups.Users = new List<UserModel>();
+            if (users is not null) groups.Users.Add(users);
             return groups;
         }, splitOn: "Id", commandType: CommandType.Text);
 
         var result = groups.GroupBy(x => x.Id).Select(y =>
         {
             var grouped = y.First();
-            if (grouped.Users is not null && grouped.Users.Count != 0)
+            if (grouped.Users.Count != 0)
             {
                 grouped.Users = y.Select(x => x.Users.Single()).ToList();
             }
@@ -60,17 +60,26 @@ public class UserGroupRepository : IUserGroupRepository
                              LEFT JOIN [User] u ON u.Id = ugu.UserId
                              WHERE ug.[Id] = @Id";
 
-        var result = await db.QueryAsync<UserGroupModel, UserModel, UserModel, UserModel, UserGroupModel>(sql,  (groups, creator, moderator, user) =>
+        var groups = await db.QueryAsync<UserGroupModel, UserModel, UserModel, UserModel, UserGroupModel>(sql,  (groups, creator, moderator, users) =>
         {
             groups.Creator = creator;
             groups.Moderator = moderator;
-            if (user is null) return groups;
-            groups.Users ??= new List<UserModel>();
-            groups.Users.Add(user);
+            groups.Users = new List<UserModel>();
+            if (users is not null) groups.Users.Add(users);
             return groups;
         }, new { Id = id }, splitOn: "Id", commandType: CommandType.Text);
 
-       return result.FirstOrDefault()!;
+        var result = groups.GroupBy(x => x.Id).Select(y =>
+        {
+            var grouped = y.First();
+            if (grouped.Users.Count != 0)
+            {
+                grouped.Users = y.Select(x => x.Users.Single()).ToList();
+            }
+            return grouped;
+        });
+
+        return result.FirstOrDefault()!;
     }
 
     public async Task InsertAsync(UserGroupModel item)
