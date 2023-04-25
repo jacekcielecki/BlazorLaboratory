@@ -9,6 +9,7 @@ public static class User
         app.MapGet("api/User", GetUsers);
         app.MapGet("api/User/{id:Guid}", GetUser);
         app.MapPost("api/User", InsertUser);
+        app.MapPost("api/User", InsertMany);
         app.MapPut("api/User", UpdateUser);
         app.MapDelete("api/User/{id:Guid}", DeleteUser);
     }
@@ -27,6 +28,12 @@ public static class User
     private static async Task<IResult> InsertUser(UserModel user, IUserData data)
     {
         await data.InsertUser(user);
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> InsertMany(IEnumerable<UserModel> users, IUserDataRepository data)
+    {
+        await data.InsertMany(users);
         return Results.Ok();
     }
 

@@ -25,4 +25,25 @@ public class UserDataRepository : IUserDataRepository
         return await db.QueryAsync<UserModel, ContactDetailsModel, UserModel>(sql,
             (user, contact) => { user.ContactDetails = contact; return user; }, commandType: CommandType.Text);
     }
+
+    public async Task<int> InsertMany(IEnumerable<UserModel> users)
+    {
+        using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
+
+        var data = new DataTable();
+        data.Columns.Add("FirstName", typeof(string));
+        data.Columns.Add("LastName", typeof(string));
+        foreach (var user in users)
+        {
+            data.Rows.Add(user.FirstName, user.LastName);
+        }
+
+        var p = new
+        {
+            newUsers = data.AsTableValuedParameter("CreateUser")
+        };
+
+        var recordsAffected = await db.ExecuteAsync("dbo.spPerson_InsertSet", p, commandType: CommandType.StoredProcedure);
+        return recordsAffected;
+    }
 }

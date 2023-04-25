@@ -62,6 +62,7 @@
     <Folder Include="HangFire\" />
     <Folder Include="HangFire\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="dbo\Types" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
@@ -85,6 +86,8 @@
     <Build Include="Security\HangFire.sql" />
     <Build Include="dbo\Tables\UserGroup.sql" />
     <Build Include="dbo\Tables\UserGroupUser.sql" />
+    <Build Include="dbo\StoredProcedures\spUser_InsertSet.sql" />
+    <Build Include="dbo\Types\CreateUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Script.PostDeployment.sql" />
