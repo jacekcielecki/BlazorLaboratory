@@ -26,7 +26,7 @@ public class UserDataRepository : IUserDataRepository
             (user, contact) => { user.ContactDetails = contact; return user; }, commandType: CommandType.Text);
     }
 
-    public async Task<int> InsertMany(IEnumerable<UserModel> users)
+    public async Task<int> InsertMany(List<UserModel> users)
     {
         using IDbConnection db = new SqlConnection(_config.GetConnectionString("default"));
 
@@ -43,7 +43,7 @@ public class UserDataRepository : IUserDataRepository
             newUsers = data.AsTableValuedParameter("CreateUser")
         };
 
-        var recordsAffected = await db.ExecuteAsync("dbo.spPerson_InsertSet", p, commandType: CommandType.StoredProcedure);
+        var recordsAffected = await db.ExecuteAsync("dbo.spUser_InsertMany", p, commandType: CommandType.StoredProcedure);
         return recordsAffected;
     }
 }

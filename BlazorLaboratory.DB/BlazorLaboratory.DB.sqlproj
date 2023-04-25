@@ -63,14 +63,10 @@
     <Folder Include="HangFire\Tables\" />
     <Folder Include="Security\" />
     <Folder Include="dbo\Types" />
+    <Folder Include="dbo\StoredProcedures\User" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_GetAll.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_Get.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_Delete.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_Update.sql" />
     <Build Include="dbo\Tables\ContactDetails.sql" />
     <Build Include="HangFire\Tables\AggregatedCounter.sql" />
     <Build Include="HangFire\Tables\Hash.sql" />
@@ -86,8 +82,13 @@
     <Build Include="Security\HangFire.sql" />
     <Build Include="dbo\Tables\UserGroup.sql" />
     <Build Include="dbo\Tables\UserGroupUser.sql" />
-    <Build Include="dbo\StoredProcedures\spUser_InsertSet.sql" />
     <Build Include="dbo\Types\CreateUser.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_Get.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_InsertMany.sql" />
+    <Build Include="dbo\StoredProcedures\User\spUser_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Script.PostDeployment.sql" />
