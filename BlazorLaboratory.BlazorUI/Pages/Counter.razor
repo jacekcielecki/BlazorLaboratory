@@ -9,7 +9,16 @@
 <MudText Typo="Typo.h3" GutterBottom="true">Counter</MudText>
 <MudText Class="mb-4">Current count: @_currentCount</MudText>
 <MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount" Disabled="@(!IsConnected)">Click me</MudButton>
-
+<br/>
+<div style="background: grey">
+    <div style="display: inline-block; width: 5%; align-items: center">
+        <MudIconButton Icon="@Icons.Filled.Lock" Size="Size.Medium" Style="background: red"/>
+    </div>
+    <div style="display: inline-block; width: 90%;">
+        <div>Project is unlocked for all collaborators and owner. You can update planning.</div>
+        <div>LockProject</div>
+    </div>
+</div>
 
 @code {
     private int _currentCount = 0;
