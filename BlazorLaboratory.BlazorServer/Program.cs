@@ -28,11 +28,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddHangfire(config => config
-    .UseSimpleAssemblyNameTypeSerializer()
-    .UseRecommendedSerializerSettings()
-    .UseSqlServerStorage(builder.Configuration.GetConnectionString("Default")));
-builder.Services.AddHangfireServer();
+//builder.Services.AddHangfire(config => config
+//    .UseSimpleAssemblyNameTypeSerializer()
+//    .UseRecommendedSerializerSettings()
+//    .UseSqlServerStorage(builder.Configuration.GetConnectionString("Default")));
+//builder.Services.AddHangfireServer();
 
 
 var app = builder.Build();
