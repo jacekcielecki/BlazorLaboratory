@@ -3,6 +3,7 @@ window.blazorExtensions = {
     createAlert: function()  {
         alert("Js interop test");
     },
+
     setCookie: function (name, value, days) {
 
         var expires;
@@ -16,6 +17,7 @@ window.blazorExtensions = {
         }
         document.cookie = name + "=" + value + expires + "; path=/";
     },
+
     getCookie: function (name) {
         var cookieName = name + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -32,5 +34,9 @@ window.blazorExtensions = {
         }
 
         return null;
-    }
+    },
+
+    deleteCookie: function (name) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    },
 }

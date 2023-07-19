@@ -9,13 +9,16 @@ public partial class CookiesManager
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        _country = await GetCookie("country");
-        if (_country == null)
+        if (firstRender)
         {
-            Snackbar.Add("Country not set");
-            _country = "";
+            _country = await GetCookie("country");
+            if (_country == null)
+            {
+                Snackbar.Add("Country not set");
+               _country = "";
+            }
+            StateHasChanged();
         }
-        StateHasChanged();
     }
 
     private async Task ShowAlert()
@@ -26,6 +29,7 @@ public partial class CookiesManager
     private async Task SetCookie(string name, string value, int days)
     {
         await JsRuntime.InvokeVoidAsync("blazorExtensions.setCookie", name, value, days);
+        StateHasChanged();
     }
 
     private async Task<string> GetCookie(string name)
@@ -33,5 +37,12 @@ public partial class CookiesManager
         var cookie = await JsRuntime.InvokeAsync<string>("blazorExtensions.getCookie", name);
         Snackbar.Add(cookie);
         return cookie;
+    }
+
+    private async Task DeleteCookie(string name)
+    {
+        await JsRuntime.InvokeVoidAsync("blazorExtensions.deleteCookie", name);
+        Snackbar.Add("cookie has been removed!");
+        StateHasChanged();
     }
 }
