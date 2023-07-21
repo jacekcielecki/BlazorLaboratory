@@ -1,0 +1,15 @@
+﻿@page "/dialog"
+@inject IDialogService DialogService
+
+<MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Dark">
+    Open Simple Dialog
+</MudButton>
+
+@code {
+
+    private void OpenDialog()
+    {
+        DialogOptions options = new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true, CloseOnEscapeKey = true };
+        DialogService.Show<SimpleDialog>("Simple Dialog", options);
+    }
+}

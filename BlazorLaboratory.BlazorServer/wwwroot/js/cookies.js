@@ -5,7 +5,6 @@ window.blazorExtensions = {
     },
 
     setCookie: function (name, value, days) {
-
         var expires;
         if (days) {
             var date = new Date();

@@ -36,6 +36,7 @@ public partial class CookiesManager
     {
         var cookie = await JsRuntime.InvokeAsync<string>("blazorExtensions.getCookie", name);
         Snackbar.Add(cookie);
+        StateHasChanged();
         return cookie;
     }
 

@@ -1,0 +1,81 @@
+﻿@using BlazorLaboratory.BlazorServer.Data
+@using Microsoft.AspNetCore.Components
+@inject ISnackbar Snackbar
+
+<div>
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h6">
+                <MudIcon Icon="@Icons.Material.Filled.Settings" Class="mr-3" />
+                Settings
+            </MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudSelect T="CountryInfo" @bind-value="Country" Label="Choose country" AnchorOrigin="Origin.BottomCenter" Class="mb-4">
+                @foreach (var country in _availableCountries)
+                {
+                    <MudSelectItem Value="@country">@country.Name</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect T="LanguageInfo" @bind-value="_language" Label="Choose language" AnchorOrigin="Origin.BottomCenter">
+                @foreach (var language in _availableLanguages.Where(x => _country.Languages.Contains(x.Name)))
+                {
+                    <MudSelectItem  Value="@language">@language.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">cancel</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Submit">ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</div>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    LanguageInfo? _language { get; set; }
+    CountryInfo? _country;
+    CountryInfo Country
+    {
+        get => _country;
+        set
+        {
+            _country = value;
+            _language = _availableLanguages.First(x => _country.Languages.Contains(x.Name));
+        }
+    }
+
+    private readonly List<CountryInfo> _availableCountries = new List<CountryInfo>()
+    {
+        new() { Name = "Global", Languages = new List<string>{"English"} },
+        new() { Name = "Australia", Languages = new List<string>{"English"} },
+        new() { Name = "Belgium", Languages = new List<string>{"Dutch", "French", "German", "English"} },
+        new() { Name = "Italy", Languages = new List<string>{"Italian", "English"} },
+        new() { Name = "Germany", Languages = new List<string>{"German", "English"} },
+        new() { Name = "United Kingdom", Languages = new List<string>{"English"} },
+    };
+
+    private readonly List<LanguageInfo> _availableLanguages = new List<LanguageInfo>()
+    {
+        new() { Name = "English", Code = "en-US" },
+        new() { Name = "Dutch", Code = "nl-BE" },
+        new() { Name = "French", Code = "fr-FR" },
+        new() { Name = "German", Code = "de-DE" },
+        new() { Name = "Italian", Code = "it-IT" }
+    };
+
+    protected override void OnInitialized()
+    {
+        Country = _availableCountries.First();
+        _language = _availableLanguages.First(x => _country.Languages.Contains(x.Name));
+    }
+
+    void Submit()
+    {
+        Snackbar.Add("Settings updated!", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}
