@@ -1,7 +1,11 @@
 using BlazorLaboratory.GraphQL.Schema;
+using BlazorLaboratory.GraphQL.Schema.Mutations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddGraphQLServer().AddQueryType<Query>();
+
+builder.Services.AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 var app = builder.Build();
 

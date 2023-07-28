@@ -1,4 +1,6 @@
-﻿namespace BlazorLaboratory.GraphQL.Schema;
+﻿using BlazorLaboratory.GraphQL.Schema.Queries;
+
+namespace BlazorLaboratory.GraphQL.Schema;
 
 public class Query
 {

@@ -1,5 +1,6 @@
 ﻿using BlazorLaboratory.GraphQL.Enums;
 using BlazorLaboratory.GraphQL.Schema;
+using BlazorLaboratory.GraphQL.Schema.Queries;
 using Bogus;
 
 namespace BlazorLaboratory.GraphQL;

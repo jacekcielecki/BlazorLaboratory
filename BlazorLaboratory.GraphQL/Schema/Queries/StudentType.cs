@@ -1,4 +1,4 @@
-﻿namespace BlazorLaboratory.GraphQL.Schema;
+﻿namespace BlazorLaboratory.GraphQL.Schema.Queries;
 
 public class StudentType
 {
