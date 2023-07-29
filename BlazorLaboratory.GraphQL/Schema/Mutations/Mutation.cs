@@ -1,4 +1,6 @@
 ﻿using BlazorLaboratory.GraphQL.Enums;
+using BlazorLaboratory.GraphQL.Schema.Subscriptions;
+using HotChocolate.Subscriptions;
 
 namespace BlazorLaboratory.GraphQL.Schema.Mutations;
 
@@ -11,9 +13,9 @@ public class Mutation
         _courses = new List<CourseResult>();
     }
 
-    public CourseResult CreateCourse(CourseInputType courseInputType)
+    public async Task<CourseResult> CreateCourse(CourseInputType courseInputType, [Service] ITopicEventSender topicEventSender)
     {
-        CourseResult courseType = new CourseResult()
+        CourseResult course = new CourseResult()
         {
             Id = Guid.NewGuid(),
             Name = courseInputType.Name,
@@ -21,11 +23,13 @@ public class Mutation
             InstructorId = Guid.NewGuid()
         };
 
-        _courses.Add(courseType);
-        return courseType;
+        _courses.Add(course);
+        await topicEventSender.SendAsync(nameof(Subscription.CourseCreated), course);
+
+        return course;
     }
 
-    public CourseResult UpdateCourse(Guid id, CourseInputType courseInputType)
+    public async Task<CourseResult> UpdateCourse(Guid id, CourseInputType courseInputType, [Service] ITopicEventSender topicEventSender)
     {
         CourseResult course = _courses.FirstOrDefault(x => x.Id == id);
         if (course is null)
@@ -33,16 +37,14 @@ public class Mutation
             throw new GraphQLException(new Error("Course not found.", "COURSE_NOT_FOUND"));
         }
 
-        CourseResult courseType = new CourseResult()
-        {
-            Id = Guid.NewGuid(),
-            Name = courseInputType.Name,
-            Subject = courseInputType.Subject,
-            InstructorId = Guid.NewGuid()
-        };
+        course.Name = courseInputType.Name;
+        course.Subject = courseInputType.Subject;
+        course.InstructorId = Guid.NewGuid();
 
-        _courses.Add(courseType);
-        return courseType;
+        string updateCourseTopic = $"{course.Id}_{nameof(Subscription.CourseUpdated)}";
+        await topicEventSender.SendAsync(updateCourseTopic, course);
+
+        return course;
     }
 
     public bool DeleteCourse(Guid id)
