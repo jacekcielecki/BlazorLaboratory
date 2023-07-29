@@ -1,22 +1,30 @@
 ﻿using BlazorLaboratory.GraphQL.Schema.Queries;
+using BlazorLaboratory.GraphQL.Services;
+using Mapster;
 
 namespace BlazorLaboratory.GraphQL.Schema;
 
 public class Query
 {
-    //These are the resolvers 
-    public IEnumerable<CourseType> GetCourses()
+    private readonly CoursesRepository _coursesRepository;
+
+    public Query(CoursesRepository coursesRepository)
     {
-        var courses = DataFakers.CourseFaker.Generate(5);
-        return courses;
+        _coursesRepository = coursesRepository;
     }
 
-    public async Task<CourseType> GetCourseByIdAsync(Guid id)
-    {
-        var course = DataFakers.CourseFaker.Generate(1).First();
-        course.Id = id;
 
-        return course;
+    //These are the resolvers 
+    public async Task<IEnumerable<CourseType>> GetCourses()
+    {
+        var courses = await _coursesRepository.Get();
+        return courses.Adapt<IEnumerable<CourseType>>();
+    }
+
+    public async Task<CourseType> GetCourseById(Guid id)
+    {
+        var course = await _coursesRepository.GetById(id);
+        return course.Adapt<CourseType>();
     }
 
     [GraphQLDeprecated("This query is deprecated.")]
