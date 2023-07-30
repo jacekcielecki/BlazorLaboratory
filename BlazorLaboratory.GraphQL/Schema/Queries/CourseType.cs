@@ -12,13 +12,13 @@ public class CourseType
     public Subject Subject { get; set; }
     public Guid InstructorId { get; set; }
     //[GraphQLNonNullType]
-    public async Task<InstructorType> Instructor([Service] InstructorDataLoader instructorDataLoader)
+    public async Task<InstructorType>? Instructor([Service] InstructorDataLoader instructorDataLoader)
     {
         var instructorDto = await instructorDataLoader.LoadAsync(InstructorId);
         //var instructorDto = await instructorRepository.GetById(InstructorId);
         return instructorDto.Adapt<InstructorType>();
     }
-    public IEnumerable<StudentType> Students { get; set; }
+    public IEnumerable<StudentType>? Students { get; set; }
 
     public string Description()
     {

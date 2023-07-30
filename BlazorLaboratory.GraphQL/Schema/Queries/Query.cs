@@ -13,10 +13,9 @@ public class Query
         _coursesRepository = coursesRepository;
     }
 
-    //These are the resolvers
-
+    [UseDbContext(typeof(SchoolDbContext))]
     [UseOffsetPaging(IncludeTotalCount = true, DefaultPageSize = 5)]
-    public async Task<IEnumerable<CourseType>> GetOffsetCourses([ScopedService] SchoolDbContext context)
+    public IQueryable<CourseType> GetOffsetCourses([ScopedService] SchoolDbContext context)
     {
         return context.Courses.Select(x => new CourseType
         {
@@ -29,7 +28,7 @@ public class Query
 
     [UseDbContext(typeof(SchoolDbContext))]
     [UsePaging(IncludeTotalCount = true, DefaultPageSize = 5)]
-    public IQueryable<CourseType> GetCourses([ScopedService] SchoolDbContext context)
+    public IQueryable<CourseType> GetPagedCourses([ScopedService] SchoolDbContext context)
     {
         return context.Courses.Select(x => new CourseType
         {
@@ -39,6 +38,12 @@ public class Query
             InstructorId = x.InstructorId
 
         });
+    }
+
+    public async Task<IEnumerable<CourseType>> GetCourses()
+    {
+        var courses = await _coursesRepository.Get();
+        return courses.Adapt<IEnumerable<CourseType>>();
     }
 
     public async Task<CourseType> GetCourseById(Guid id)
