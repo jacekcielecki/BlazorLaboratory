@@ -15,7 +15,8 @@ builder.Services.AddGraphQLServer()
     .AddSubscriptionType<Subscription>()
     .AddInMemorySubscriptions();
 
-builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => 
+    x.UseSqlServer(connectionString)).AddLogging(x => x.AddConsole());
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
