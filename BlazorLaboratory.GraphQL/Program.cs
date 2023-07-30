@@ -1,3 +1,4 @@
+using BlazorLaboratory.GraphQL.DataLoaders;
 using BlazorLaboratory.GraphQL.Schema;
 using BlazorLaboratory.GraphQL.Schema.Mutations;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
@@ -16,6 +17,8 @@ builder.Services.AddGraphQLServer()
 
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddScoped<CoursesRepository>();
+builder.Services.AddScoped<InstructorRepository>();
+builder.Services.AddScoped<InstructorDataLoader>();
 
 var app = builder.Build();
 

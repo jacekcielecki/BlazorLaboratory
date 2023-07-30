@@ -14,25 +14,25 @@ public class CoursesRepository
 
     public async Task<IEnumerable<CourseDto>> Get()
     {
-        using SchoolDbContext db = _contextFactory.CreateDbContext();
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Courses
-            .Include(x => x.Instructor)
-            .Include(x => x.Students)
+            //.Include(x => x.Instructor)
+            //.Include(x => x.Students)
             .ToListAsync();
     }
 
     public async Task<CourseDto?> GetById(Guid id)
     {
-        using SchoolDbContext db = _contextFactory.CreateDbContext();
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Courses
-            .Include(x => x.Instructor)
-            .Include(x => x.Students)
+            //.Include(x => x.Instructor)
+            //.Include(x => x.Students)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<CourseDto> Create(CourseDto course)
     {
-        using SchoolDbContext db = _contextFactory.CreateDbContext();
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         db.Courses.Add(course);
         await db.SaveChangesAsync();
 
@@ -41,7 +41,7 @@ public class CoursesRepository
 
     public async Task<CourseDto> Update(CourseDto course)
     {
-        using SchoolDbContext db = _contextFactory.CreateDbContext();
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         db.Courses.Update(course);
         await db.SaveChangesAsync();
 
@@ -50,7 +50,7 @@ public class CoursesRepository
 
     public async Task<bool> Delete(Guid id)
     {
-        using SchoolDbContext db = _contextFactory.CreateDbContext();
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         CourseDto course = new CourseDto()
         {
             Id = id

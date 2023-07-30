@@ -23,6 +23,6 @@ public static class DataFakers
         .RuleFor(p => p.Id, f => Guid.NewGuid())
         .RuleFor(p => p.Name, f => f.Name.JobTitle())
         .RuleFor(p => p.Subject, f => f.PickRandom<Subject>())
-        .RuleFor(p => p.Instructor, f => InstructorFaker.Generate(1).First())
+        .RuleFor(p => p.InstructorId, f => Guid.NewGuid())
         .RuleFor(p => p.Students, f => StudentFaker.Generate(5));
 }
