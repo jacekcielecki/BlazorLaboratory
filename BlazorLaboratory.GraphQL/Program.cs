@@ -1,6 +1,6 @@
 using BlazorLaboratory.GraphQL.DataLoaders;
-using BlazorLaboratory.GraphQL.Schema;
 using BlazorLaboratory.GraphQL.Schema.Mutations;
+using BlazorLaboratory.GraphQL.Schema.Queries;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,8 @@ builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>()
-    .AddInMemorySubscriptions();
+    .AddInMemorySubscriptions()
+    .AddFiltering();
 
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => 
     x.UseSqlServer(connectionString)).AddLogging(x => x.AddConsole());

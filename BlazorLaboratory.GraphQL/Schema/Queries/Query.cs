@@ -1,8 +1,8 @@
-﻿using BlazorLaboratory.GraphQL.Schema.Queries;
+﻿using BlazorLaboratory.GraphQL.Filter;
 using BlazorLaboratory.GraphQL.Services;
 using Mapster;
 
-namespace BlazorLaboratory.GraphQL.Schema;
+namespace BlazorLaboratory.GraphQL.Schema.Queries;
 
 public class Query
 {
@@ -15,7 +15,7 @@ public class Query
 
     [UseDbContext(typeof(SchoolDbContext))]
     [UseOffsetPaging(IncludeTotalCount = true, DefaultPageSize = 5)]
-    public IQueryable<CourseType> GetOffsetCourses([ScopedService] SchoolDbContext context)
+    public IQueryable<CourseType> GetOffsetPagedCourses([ScopedService] SchoolDbContext context)
     {
         return context.Courses.Select(x => new CourseType
         {
@@ -28,6 +28,7 @@ public class Query
 
     [UseDbContext(typeof(SchoolDbContext))]
     [UsePaging(IncludeTotalCount = true, DefaultPageSize = 5)]
+    [UseFiltering(filterType: typeof(CourseFilterType))]
     public IQueryable<CourseType> GetPagedCourses([ScopedService] SchoolDbContext context)
     {
         return context.Courses.Select(x => new CourseType

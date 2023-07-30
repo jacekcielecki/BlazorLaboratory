@@ -15,19 +15,13 @@ public class CoursesRepository
     public async Task<IEnumerable<CourseDto>> Get()
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
-        return await db.Courses
-            //.Include(x => x.Instructor)
-            //.Include(x => x.Students)
-            .ToListAsync();
+        return await db.Courses.ToListAsync();
     }
 
     public async Task<CourseDto?> GetById(Guid id)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
-        return await db.Courses
-            //.Include(x => x.Instructor)
-            //.Include(x => x.Students)
-            .FirstOrDefaultAsync(x => x.Id == id);
+        return await db.Courses.FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<CourseDto> Create(CourseDto course)
