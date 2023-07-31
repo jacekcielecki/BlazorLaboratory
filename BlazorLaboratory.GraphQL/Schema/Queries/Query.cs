@@ -1,4 +1,5 @@
 ﻿using BlazorLaboratory.GraphQL.Filter;
+using BlazorLaboratory.GraphQL.Schema.Sorters;
 using BlazorLaboratory.GraphQL.Services;
 using Mapster;
 
@@ -29,6 +30,7 @@ public class Query
     [UseDbContext(typeof(SchoolDbContext))]
     [UsePaging(IncludeTotalCount = true, DefaultPageSize = 5)]
     [UseFiltering(filterType: typeof(CourseFilterType))]
+    [UseSorting(sortingType: typeof(CourseSortType))]
     public IQueryable<CourseType> GetPagedCourses([ScopedService] SchoolDbContext context)
     {
         return context.Courses.Select(x => new CourseType
