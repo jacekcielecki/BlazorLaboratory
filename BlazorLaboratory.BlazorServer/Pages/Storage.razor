@@ -1,0 +1,15 @@
+﻿@page "/ProtectedBrowserStorage"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+@inject ProtectedLocalStorage ProtectedLocalStorage
+
+<h3>Storage</h3>
+<h2>Current country storage value: @_country</h2>
+
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="@ShowAlert">Alert</MudButton>
+<MudButton Color="Color.Success" Variant="Variant.Filled" @onclick=@(() => GetItem("country"))>Get</MudButton>
+<MudButton Color="Color.Tertiary" Variant="Variant.Filled" @onclick=@(() => SetItem("country", _newItemValue))>Set</MudButton>
+<MudButton Color="Color.Warning" Variant="Variant.Filled" @onclick=@(() => DeleteItem("country"))>Delete</MudButton>
+
+<MudTextField @bind-Value="_newItemValue" Label="New cookie value" Variant="Variant.Text" />
