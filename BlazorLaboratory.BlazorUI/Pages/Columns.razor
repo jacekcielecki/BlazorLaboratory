@@ -1,7 +1,5 @@
 ﻿@page "/columns"
-@inject ISnackbar _snackbar
-@using BlazorLaboratory.Dto
-@using BlazorLaboratory.BlazorUI.Shared;
+@inject ISnackbar Snackbar
 
 <h3>Columns</h3>
 <br/>
@@ -25,9 +23,7 @@
                 <MudText Typo="Typo.h6" Align="Align.Left" Style="background: orange">Lock Project</MudText>
             </div>
     </MudListItem>
-
 </div>
-@*
 
 <br />
 <br />
@@ -44,16 +40,14 @@
             </div>
         </div>
     </MudListItem>
-
 </MudList>
 
+<br />
+<br />
 
-
-*@
-
-<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" MultiSelection="true"
-           @bind-Value="value" @bind-SelectedValues="options" T="string" Label="US States" AdornmentIcon="@Icons.Material.Filled.Search" AnchorOrigin="Origin.BottomCenter">
-    @foreach (var state in states)
+<MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetStatesMultiSelectionText))" MultiSelection="true" 
+           @bind-SelectedValues="_selectedStates" T="string" Label="Select US States" AdornmentIcon="@Icons.Material.Filled.Search" AnchorOrigin="Origin.BottomCenter">
+    @foreach (var state in _states)
     {
         <MudSelectItem T="string" Value="@state">@state</MudSelectItem>
     }
@@ -62,25 +56,13 @@
 
 
 @code {
-
-    private string value { get; set; } = "Nothing selected";
-    private IEnumerable<string> options { get; set; } = new HashSet<string>() { "Alaska" };
-
-    private string[] states =
+    private readonly string[] _states =
     {
         "Alabama", "Alaska", "American Samoa", "Arizona",
     };
+    private IEnumerable<string> _selectedStates = new HashSet<string>() { "Alaska" };
 
-    private IEnumerable<KeywordDto> AllKeywords = new List<KeywordDto>
-    {
-        new KeywordDto{ Id = Guid.NewGuid(), Name = "Test1"},
-        new KeywordDto{ Id = Guid.NewGuid(), Name = "Test2"},
-        new KeywordDto{ Id = Guid.NewGuid(), Name = "Test3"},
-        new KeywordDto{ Id = Guid.NewGuid(), Name = "Test4"},
-    };
+    private string GetStatesMultiSelectionText(List<string> selectedStates) => 
+        selectedStates.Count == 0 ? "None" : selectedStates.Count == _states.Length ? "All" : string.Join(", ", selectedStates);
 
-    private string GetMultiSelectionText(List<string> selectedValues)
-    {
-        return AllKeywords.Count() == selectedValues.Count ? "All" : string.Join(", ", selectedValues);
-    }
 }
