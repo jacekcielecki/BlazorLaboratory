@@ -1,51 +1,37 @@
 ﻿@page "/dapper"
 
-@if (_users is not null)
+@if (_users == null)
 {
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full">
-                        <thead class="bg-gray-400 border-b">
-                        <tr>
-                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                #
-                            </th>
-                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                First Name
-                            </th>
-                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Last Name
-                            </th>
-                            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Action
-                            </th>
-                        </tr>
-                        </thead>
-                            <tbody>
-                                @foreach (var user in _users)
-                                {
-                                    <tr class="bg-gray-100 border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            @user.Id
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            @user.FirstName
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            @user.LastName
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <img src="icons/edit.svg" width="20px" height="20px"/>
-                                            <img src="icons/delete.svg" width="20px" height="20px"/>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <span class="loading loading-bars loading-md"></span>
+}
+else
+{
+    <button class="btn">Add</button>
+    <div class="overflow-x-auto">
+        <table class="table table-xs">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Role</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in _users)
+            {
+                <tr>
+                    <th>@user.Id</th>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Role</td>
+                    <td><img src="icons/edit.svg" width="20px" height="20px" alt="edit"/></td>
+                    <td @onclick="() => DeleteItem(user.Id)"><img src="icons/delete.svg" width="20px" height="20px" alt="delete" /></td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 }

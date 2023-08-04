@@ -21,9 +21,8 @@ public partial class DapperTest
         }
         catch (Exception e)
         {
-            Snackbar.Add(e.Message, Severity.Info);
-            Snackbar.Add("Unable to connect to api, returning mocked data instead!", Severity.Info);
-            _users = new List<UserDto>()
+            Snackbar.Add($"{e.Message}, returning mocked data instead!", Severity.Info);
+            _users = new List<UserDto>
             {
                 new () { Id = 1, FirstName = "User1FirstName", LastName = "User1LastName", Role = UserRole.Administrator },
                 new () { Id = 2, FirstName = "User2FirstName", LastName = "User2LastName", Role = UserRole.CardsCreator },
@@ -33,5 +32,12 @@ public partial class DapperTest
                 new () { Id = 6, FirstName = "User6FirstName", LastName = "User6LastName", Role = UserRole.Viewer }
             };
         }
+    }
+
+    private void DeleteItem(int id)
+    {
+        var item = _users.First(x => x.Id == id);
+        _users.Remove(item);
+        StateHasChanged();
     }
 }
