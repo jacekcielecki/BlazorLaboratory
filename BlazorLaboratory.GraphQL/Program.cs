@@ -14,7 +14,8 @@ builder.Services.AddGraphQLServer()
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>()
     .AddInMemorySubscriptions()
-    .AddFiltering();
+    .AddFiltering()
+    .AddSorting();
 
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => 
     x.UseSqlServer(connectionString)).AddLogging(x => x.AddConsole());
