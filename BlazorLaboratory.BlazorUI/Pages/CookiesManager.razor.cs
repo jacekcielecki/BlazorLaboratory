@@ -1,10 +1,10 @@
 ﻿using Microsoft.JSInterop;
 
-namespace BlazorLaboratory.BlazorServer.Pages;
+namespace BlazorLaboratory.BlazorUI.Pages;
 
 public partial class CookiesManager
 {
-    private string _country;
+    private string? _country;
     private string _newCookieValue = "";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -15,7 +15,7 @@ public partial class CookiesManager
             if (_country == null)
             {
                 Snackbar.Add("Country not set");
-               _country = "";
+                _country = "";
             }
             StateHasChanged();
         }
@@ -32,12 +32,16 @@ public partial class CookiesManager
         StateHasChanged();
     }
 
-    private async Task<string> GetCookie(string name)
+    private async Task<string?> GetCookie(string name)
     {
-        var cookie = await JsRuntime.InvokeAsync<string>("blazorExtensions.getCookie", name);
-        Snackbar.Add(cookie);
-        StateHasChanged();
-        return cookie;
+        var cookie = await JsRuntime.InvokeAsync<string?>("blazorExtensions.getCookie", name);
+        if (cookie != null)
+        {
+            Snackbar.Add(cookie);
+            StateHasChanged();
+            return cookie;
+        }
+        return null;
     }
 
     private async Task DeleteCookie(string name)

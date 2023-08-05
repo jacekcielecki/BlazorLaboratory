@@ -59,7 +59,6 @@ public class Mutation
         catch (Exception)
         {
             return false;
-            throw;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿@page "/counter"
 @inject NavigationManager NavManager
 @using Microsoft.AspNetCore.SignalR.Client
-@using MudBlazor
 @implements IAsyncDisposable
 @inject ISnackbar Snackbar
 
@@ -19,8 +18,15 @@
 
     private async Task IncrementCount()
     {
-        if (_hubConnection is not null)
-            await _hubConnection.InvokeAsync("AddToTotal", "DummyName", 1);
+        try
+        {
+            if (_hubConnection is not null)
+                await _hubConnection.InvokeAsync("AddToTotal", "DummyName", 1);
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add(e.Message, Severity.Error);
+        }
     }
 
     protected override async Task OnInitializedAsync()

@@ -47,6 +47,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapGraphQL();
 });
 
-//app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello World!");
 
 app.Run();
