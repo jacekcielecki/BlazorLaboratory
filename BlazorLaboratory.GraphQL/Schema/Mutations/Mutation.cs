@@ -1,7 +1,7 @@
 ﻿using BlazorLaboratory.GraphQL.Dto;
+using BlazorLaboratory.GraphQL.Extensions;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
-using FirebaseAdminAuthentication.DependencyInjection.Models;
 using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using Mapster;
@@ -18,14 +18,17 @@ public class Mutation
         _coursesRepository = coursesRepository;
     }
 
-    public async Task<CourseResult> CreateCourse(CourseInputType courseInputType, [Service] ITopicEventSender topicEventSender)
+    [Authorize(Policy = "IsAdmin")]
+    public async Task<CourseResult> CreateCourse(CourseInputType courseInputType,
+        [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claims)
     {
         CourseDto course = new CourseDto()
         {
             Id = Guid.NewGuid(),
             Name = courseInputType.Name,
             Subject = courseInputType.Subject,
-            InstructorId = courseInputType.InstructorId
+            InstructorId = courseInputType.InstructorId,
+            CreatorId = claims.GetUserId()
         };
 
         var result = await _coursesRepository.Create(course);
@@ -34,28 +37,36 @@ public class Mutation
         return result.Adapt<CourseResult>();
     }
 
-    public async Task<CourseResult> UpdateCourse(Guid id, CourseInputType courseInputType, [Service] ITopicEventSender topicEventSender)
+    [Authorize(Policy = "IsAdmin")]
+    public async Task<CourseResult> UpdateCourse(Guid id, CourseInputType courseInputType, 
+        [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claims)
     {
-        //throw new GraphQLException(new Error("Course not found.", "COURSE_NOT_FOUND"));
-        CourseDto course = new CourseDto()
+        var userId = claims.GetUserId();
+        CourseDto? currentCourseDto = await _coursesRepository.GetById(id);
+        if (currentCourseDto == null)
         {
-            Id = id,
-            Name = courseInputType.Name,
-            Subject = courseInputType.Subject,
-            InstructorId = courseInputType.InstructorId
-        };
-        course = await _coursesRepository.Update(course);
+            throw new GraphQLException(new Error("Course not found.", "COURSE_NOT_FOUND"));
+        }
+		if (currentCourseDto?.CreatorId != userId)
+        { 
+            throw new GraphQLException(new Error("You do not have a permission to update this resource", "INVALID_PERMISSION"));
+        }
 
-        string updateCourseTopic = $"{course.Id}_{nameof(Subscription.CourseUpdated)}";
-        await topicEventSender.SendAsync(updateCourseTopic, course);
+        currentCourseDto.Name = courseInputType.Name;
+        currentCourseDto.Subject = courseInputType.Subject;
+        currentCourseDto.InstructorId = courseInputType.InstructorId;
 
-        return course.Adapt<CourseResult>();
+        CourseDto courseUpdated = await _coursesRepository.Update(currentCourseDto);
+
+        string updateCourseTopic = $"{currentCourseDto.Id}_{nameof(Subscription.CourseUpdated)}";
+        await topicEventSender.SendAsync(updateCourseTopic, currentCourseDto);
+
+        return courseUpdated.Adapt<CourseResult>();
     }
 
-    [Authorize]
-    public async Task<bool> DeleteCourse(Guid id, ClaimsPrincipal claims)
+    [Authorize(Policy = "IsAdmin")]
+    public async Task<bool> DeleteCourse(Guid id)
     {
-        var userId = claims.FindFirstValue(FirebaseUserClaimType.ID);
         //return _courses.RemoveAll(x => x.Id == id) > 1;
         try
         {

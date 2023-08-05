@@ -5,6 +5,7 @@ using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
 using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
+using FirebaseAdminAuthentication.DependencyInjection.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,9 @@ builder.Services.AddGraphQLServer()
 
 builder.Services.AddSingleton(FirebaseApp.Create());
 builder.Services.AddFirebaseAuthentication();
+builder.Services.AddAuthorization(
+    x => x.AddPolicy("IsAdmin",
+        p => p.RequireClaim(FirebaseUserClaimType.EMAIL, "jacek900@gmail.com")));
 
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => x
     .UseSqlServer(connectionString))
