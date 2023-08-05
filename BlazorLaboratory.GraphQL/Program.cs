@@ -3,10 +3,11 @@ using BlazorLaboratory.GraphQL.Schema.Mutations;
 using BlazorLaboratory.GraphQL.Schema.Queries;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
+using FirebaseAdmin;
+using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var connectionString = builder.Configuration.GetConnectionString("SchoolDb");
 
 builder.Services.AddGraphQLServer()
@@ -16,10 +17,15 @@ builder.Services.AddGraphQLServer()
     .AddInMemorySubscriptions()
     .AddFiltering()
     .AddSorting()
-    .AddProjections();
+    .AddProjections()
+    .AddAuthorization();
 
-builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => 
-    x.UseSqlServer(connectionString)).AddLogging(x => x.AddConsole());
+builder.Services.AddSingleton(FirebaseApp.Create());
+builder.Services.AddFirebaseAuthentication();
+
+builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => x
+    .UseSqlServer(connectionString))
+    .AddLogging(x => x.AddConsole());
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
@@ -43,6 +49,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseRouting();
 app.UseWebSockets();
+app.UseAuthentication();
 app.UseEndpoints(endpoints =>
 { 
     endpoints.MapGraphQL();

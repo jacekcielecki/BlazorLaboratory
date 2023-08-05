@@ -1,8 +1,11 @@
 ﻿using BlazorLaboratory.GraphQL.Dto;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
+using FirebaseAdminAuthentication.DependencyInjection.Models;
+using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using Mapster;
+using System.Security.Claims;
 
 namespace BlazorLaboratory.GraphQL.Schema.Mutations;
 
@@ -49,8 +52,10 @@ public class Mutation
         return course.Adapt<CourseResult>();
     }
 
-    public async Task<bool> DeleteCourse(Guid id)
+    [Authorize]
+    public async Task<bool> DeleteCourse(Guid id, ClaimsPrincipal claims)
     {
+        var userId = claims.FindFirstValue(FirebaseUserClaimType.ID);
         //return _courses.RemoveAll(x => x.Id == id) > 1;
         try
         {
