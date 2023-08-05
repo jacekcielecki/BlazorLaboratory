@@ -39,8 +39,8 @@ public class Query
             Id = x.Id,
             Name = x.Name,
             Subject = x.Subject,
-            InstructorId = x.InstructorId
-
+            InstructorId = x.InstructorId,
+            CreatorId = x.CreatorId
         });
     }
 

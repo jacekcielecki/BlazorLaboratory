@@ -33,6 +33,7 @@ builder.Services.AddPooledDbContextFactory<SchoolDbContext>(x => x
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
+builder.Services.AddScoped<UserDataLoader>();
 
 var app = builder.Build();
 

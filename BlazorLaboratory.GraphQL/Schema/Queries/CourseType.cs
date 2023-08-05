@@ -3,6 +3,7 @@ using BlazorLaboratory.GraphQL.Enums;
 using BlazorLaboratory.GraphQL.Services;
 using FirebaseAdmin.Auth;
 using Mapster;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BlazorLaboratory.GraphQL.Schema.Queries;
 
@@ -22,8 +23,8 @@ public class CourseType
     }
     public IEnumerable<StudentType>? Students { get; set; }
 
-    //[IsProjected(false)] // never query for the NonExistingItemId id
-	//public Guid NonExistingItemId { get; set; }
+	//[IsProjected(false)] // never query for the SomeRelatedItemId id
+	//public Guid SomeRelatedItemId { get; set; }
 
 	public string Description()
     {
@@ -31,11 +32,17 @@ public class CourseType
     }
 
     [IsProjected(true)]
-    public Guid CreatorId { get; set; }
+    public string? CreatorId { get; set; }
 
-    public async Task<UserType?> Creator()
+    public async Task<UserType?> Creator([Service] UserDataLoader userDataLoader)
     {
-        UserRecord? user = await FirebaseAuth.DefaultInstance.GetUserAsync("QIihfbEO4mbiyQlC7hAD53b0dHt2");
-        return new UserType{ Email = user.Email, Id = Guid.Parse("9A6204D7-FB11-4FF6-826A-4967F98D7B91") };
+        if (CreatorId.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+        //UserRecord user = await FirebaseAuth.DefaultInstance.GetUserAsync(CreatorId);
+        //return new UserType { Username = user.Email, Id = CreatorId };
+        return await userDataLoader.LoadAsync(CreatorId, CancellationToken.None);
     }
 }
