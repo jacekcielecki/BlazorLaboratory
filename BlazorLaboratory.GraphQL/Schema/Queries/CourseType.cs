@@ -10,6 +10,7 @@ public class CourseType
     public Guid Id { get; set; }
     public string Name { get; set; }
     public Subject Subject { get; set; }
+    [IsProjected(true)] // always query for the Instructor id
     public Guid InstructorId { get; set; }
     //[GraphQLNonNullType]
     public async Task<InstructorType>? Instructor([Service] InstructorDataLoader instructorDataLoader)
@@ -20,7 +21,10 @@ public class CourseType
     }
     public IEnumerable<StudentType>? Students { get; set; }
 
-    public string Description()
+    //[IsProjected(false)] // never query for the NonExistingItemId id
+	//public Guid NonExistingItemId { get; set; }
+
+	public string Description()
     {
         return $"This is a {Name} description";
     }
