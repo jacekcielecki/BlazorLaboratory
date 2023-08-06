@@ -1,5 +1,6 @@
 ﻿using BlazorLaboratory.GraphQL.Dto;
 using BlazorLaboratory.GraphQL.Extensions;
+using BlazorLaboratory.GraphQL.Schema.Mutations.Course;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
 using HotChocolate.Authorization;

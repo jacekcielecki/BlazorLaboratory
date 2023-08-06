@@ -1,9 +1,12 @@
 ﻿using BlazorLaboratory.GraphQL.DataLoaders;
 using BlazorLaboratory.GraphQL.Enums;
+using BlazorLaboratory.GraphQL.Schema.Queries.Instructor;
+using BlazorLaboratory.GraphQL.Schema.Queries.Student;
+using BlazorLaboratory.GraphQL.Schema.Queries.User;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BlazorLaboratory.GraphQL.Schema.Queries;
+namespace BlazorLaboratory.GraphQL.Schema.Queries.Course;
 
 public class CourseType : ISearchResultType
 {
@@ -21,10 +24,10 @@ public class CourseType : ISearchResultType
     }
     public IEnumerable<StudentType>? Students { get; set; }
 
-	//[IsProjected(false)] // never query for the SomeRelatedItemId id
-	//public Guid SomeRelatedItemId { get; set; }
+    //[IsProjected(false)] // never query for the SomeRelatedItemId id
+    //public Guid SomeRelatedItemId { get; set; }
 
-	public string Description()
+    public string Description()
     {
         return $"This is a {Name} description";
     }

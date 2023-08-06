@@ -1,4 +1,4 @@
-﻿namespace BlazorLaboratory.GraphQL.Schema.Queries;
+﻿namespace BlazorLaboratory.GraphQL.Schema.Queries.User;
 
 public class UserType
 {

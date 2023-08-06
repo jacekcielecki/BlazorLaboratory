@@ -1,4 +1,4 @@
-﻿using BlazorLaboratory.GraphQL.Schema.Queries;
+﻿using BlazorLaboratory.GraphQL.Schema.Queries.User;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 

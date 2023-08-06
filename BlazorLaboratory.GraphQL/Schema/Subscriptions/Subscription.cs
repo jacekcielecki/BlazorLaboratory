@@ -1,4 +1,4 @@
-﻿using BlazorLaboratory.GraphQL.Schema.Mutations;
+﻿using BlazorLaboratory.GraphQL.Schema.Mutations.Course;
 using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 

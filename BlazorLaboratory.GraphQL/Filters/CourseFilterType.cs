@@ -1,4 +1,4 @@
-﻿using BlazorLaboratory.GraphQL.Schema.Queries;
+﻿using BlazorLaboratory.GraphQL.Schema.Queries.Course;
 using HotChocolate.Data.Filters;
 
 namespace BlazorLaboratory.GraphQL.Filter;
