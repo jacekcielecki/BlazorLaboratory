@@ -1,3 +1,4 @@
+using AppAny.HotChocolate.FluentValidation;
 using BlazorLaboratory.GraphQL.DataLoaders;
 using BlazorLaboratory.GraphQL.Schema.Mutations;
 using BlazorLaboratory.GraphQL.Schema.Queries;
@@ -5,13 +6,18 @@ using BlazorLaboratory.GraphQL.Schema.Queries.Course;
 using BlazorLaboratory.GraphQL.Schema.Queries.Instructor;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
+using BlazorLaboratory.GraphQL.Validators;
 using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using FirebaseAdminAuthentication.DependencyInjection.Models;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SchoolDb");
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<CourseTypeInputValidator>();
 
 builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
@@ -24,7 +30,8 @@ builder.Services.AddGraphQLServer()
     .AddFiltering()
     .AddSorting()
     .AddProjections()
-    .AddAuthorization();
+    .AddAuthorization()
+    .AddFluentValidation();
 
 builder.Services.AddSingleton(FirebaseApp.Create());
 builder.Services.AddFirebaseAuthentication();

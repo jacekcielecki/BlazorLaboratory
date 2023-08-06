@@ -7,6 +7,10 @@ using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using Mapster;
 using System.Security.Claims;
+using AppAny.HotChocolate.FluentValidation;
+using BlazorLaboratory.GraphQL.Validators;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace BlazorLaboratory.GraphQL.Schema.Mutations;
 
@@ -20,7 +24,7 @@ public class Mutation
     }
 
     [Authorize(Policy = "IsAdmin")]
-    public async Task<CourseResult> CreateCourse(CourseInputType courseInputType,
+    public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInputType,
         [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claims)
     {
         CourseDto course = new CourseDto()
