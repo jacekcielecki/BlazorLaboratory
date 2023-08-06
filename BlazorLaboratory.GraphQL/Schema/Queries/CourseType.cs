@@ -1,13 +1,11 @@
 ﻿using BlazorLaboratory.GraphQL.DataLoaders;
 using BlazorLaboratory.GraphQL.Enums;
-using BlazorLaboratory.GraphQL.Services;
-using FirebaseAdmin.Auth;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BlazorLaboratory.GraphQL.Schema.Queries;
 
-public class CourseType
+public class CourseType : ISearchResultType
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
