@@ -26,4 +26,19 @@ public class InstructorRepository
             .Where(x => keys.Contains(x.Id))
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<InstructorDto>> Get()
+    {
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
+        return await db.Instructors.ToListAsync();
+    }
+
+	public async Task<InstructorDto> Create(InstructorDto instructor)
+    {
+        await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
+        db.Instructors.Add(instructor);
+        await db.SaveChangesAsync();
+
+        return instructor;
+	}
 }

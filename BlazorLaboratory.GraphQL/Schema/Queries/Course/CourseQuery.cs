@@ -50,6 +50,7 @@ public class CourseQuery
         var courses = await _coursesRepository.Get();
         return courses.Adapt<IEnumerable<CourseType>>();
     }
+
     public async Task<CourseType> GetCourseById(Guid id)
     {
         var course = await _coursesRepository.GetById(id);

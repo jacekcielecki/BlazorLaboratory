@@ -2,6 +2,7 @@
 using BlazorLaboratory.GraphQL.Dto;
 using BlazorLaboratory.GraphQL.Middleware.UseUser;
 using BlazorLaboratory.GraphQL.Schema.Mutations.Course;
+using BlazorLaboratory.GraphQL.Schema.Mutations.Instructor;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
 using BlazorLaboratory.GraphQL.Validators;
@@ -14,10 +15,12 @@ namespace BlazorLaboratory.GraphQL.Schema.Mutations;
 public class Mutation
 {
     private readonly CoursesRepository _coursesRepository;
+    private readonly InstructorRepository _instructorRepository;
 
-    public Mutation(CoursesRepository coursesRepository)
+    public Mutation(CoursesRepository coursesRepository, InstructorRepository instructorRepository)
     {
         _coursesRepository = coursesRepository;
+        _instructorRepository = instructorRepository;
     }
 
     [Authorize(Policy = "IsAdmin")]
@@ -80,6 +83,22 @@ public class Mutation
         {
             return false;
         }
+    }
+
+    [Authorize(Policy = "IsAdmin")]
+    [UseUser]
+    public async Task<InstructorResult> CreateInstructor(InstructorInputType instructorInputType)
+    {
+        InstructorDto instructor = new InstructorDto()
+        {
+            Id = Guid.NewGuid(),
+            FirstName = instructorInputType.FirstName,
+            LastName = instructorInputType.LastName,
+            Salary = instructorInputType.Salary
+        };
+
+        var result = await _instructorRepository.Create(instructor);
+        return result.Adapt<InstructorResult>();
     }
 }
 

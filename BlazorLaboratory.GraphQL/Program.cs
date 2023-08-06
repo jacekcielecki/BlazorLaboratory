@@ -11,7 +11,9 @@ using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using FirebaseAdminAuthentication.DependencyInjection.Models;
 using FluentValidation.AspNetCore;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SchoolDb");
@@ -26,6 +28,7 @@ builder.Services.AddGraphQLServer()
     .AddType<CourseType>()
     .AddTypeExtension<CourseQuery>()
     .AddType<InstructorType>()
+    .AddTypeExtension<InstructorQuery>()
     .AddInMemorySubscriptions()
     .AddFiltering()
     .AddSorting()
@@ -33,7 +36,10 @@ builder.Services.AddGraphQLServer()
     .AddAuthorization()
     .AddFluentValidation();
 
-builder.Services.AddSingleton(FirebaseApp.Create());
+builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile(builder.Configuration.GetValue<string>("FIREBASE_CONFIG"))
+}));
 builder.Services.AddFirebaseAuthentication();
 builder.Services.AddAuthorization(
     x => x.AddPolicy("IsAdmin",
