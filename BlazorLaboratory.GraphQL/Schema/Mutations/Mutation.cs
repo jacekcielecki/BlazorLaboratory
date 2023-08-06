@@ -1,16 +1,13 @@
-﻿using BlazorLaboratory.GraphQL.Dto;
-using BlazorLaboratory.GraphQL.Extensions;
+﻿using AppAny.HotChocolate.FluentValidation;
+using BlazorLaboratory.GraphQL.Dto;
+using BlazorLaboratory.GraphQL.Middleware.UseUser;
 using BlazorLaboratory.GraphQL.Schema.Mutations.Course;
 using BlazorLaboratory.GraphQL.Schema.Subscriptions;
 using BlazorLaboratory.GraphQL.Services;
+using BlazorLaboratory.GraphQL.Validators;
 using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using Mapster;
-using System.Security.Claims;
-using AppAny.HotChocolate.FluentValidation;
-using BlazorLaboratory.GraphQL.Validators;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace BlazorLaboratory.GraphQL.Schema.Mutations;
 
@@ -24,8 +21,9 @@ public class Mutation
     }
 
     [Authorize(Policy = "IsAdmin")]
+    [UseUser]
     public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInputType,
-        [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claims)
+        [Service] ITopicEventSender topicEventSender, [User] User user)
     {
         CourseDto course = new CourseDto()
         {
@@ -33,7 +31,7 @@ public class Mutation
             Name = courseInputType.Name,
             Subject = courseInputType.Subject,
             InstructorId = courseInputType.InstructorId,
-            CreatorId = claims.GetUserId()
+            CreatorId = user.Id
         };
 
         var result = await _coursesRepository.Create(course);
@@ -43,10 +41,11 @@ public class Mutation
     }
 
     [Authorize(Policy = "IsAdmin")]
+    [UseUser]
     public async Task<CourseResult> UpdateCourse(Guid id, CourseInputType courseInputType, 
-        [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claims)
+        [Service] ITopicEventSender topicEventSender, [User] User user)
     {
-        var userId = claims.GetUserId();
+        var userId = user.Id;
         CourseDto? currentCourseDto = await _coursesRepository.GetById(id);
         if (currentCourseDto == null)
         {
