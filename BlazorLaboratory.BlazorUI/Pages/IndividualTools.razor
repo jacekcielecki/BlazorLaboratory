@@ -9,40 +9,44 @@
                 <MudText Style="border:none;outline:none;font-weight: 700;" Typo="Typo.h5">BlazorLaboratory Individual Tools</MudText>
                 <MudText Style="border:none;outline:none;font-weight: 700; margin-top: 1%" Typo="Typo.body2">The following tools are supported by the Building Ecosystem. They can be used directly without an official project.</MudText>
             </MudItem>
-            
-            <MudItem sm="10">
-                <MudCard Style="margin: 15px 0 20px 0; border: 1px solid #D2D2D2; border-radius: 1px;" Elevation="0">
-                    <MudCardContent Class="p-0">
-                        <div class="d-flex align-center">
-                            <div style="max-height: 185px; max-width: 300px; flex: 1">
-                                <img style="object-fit: cover; min-width: 100%; height: 185px; max-width: 300px; margin-top: -1px; margin-bottom: -1px;" src="images/back-view-woman-sitting-by-table.jpg" alt="placeholder image" />
-                            </div>
-                            <div style="flex: 2; margin-left: 10px;" class=" col-10 d-flex flex-column">
-                                <MudText Class="my-2" Style="font-size: 1.1rem; font-weight: 700;" Typo="Typo.h5">Electrical Planning</MudText>
-                                <MudText Style="font-size: .90rem; color: #646464; font-weight: 400; line-height: 1.7;" Typo="Typo.body2">@_description</MudText>
-                                <div class="d-flex align-center" style="background-color: transparent; padding: 4px 16px; margin-right: -17px; margin-left: -17px;">
-                                    <MudButton Target="_blank" Link="https://www.google.pl/">
-                                        <MudText Style="font-weight: 500; font-size: .9rem;" Typo="Typo.body1">Learn more</MudText>
-                                    </MudButton>
-                                </div>
-                            </div>
-                        </div>
-                    </MudCardContent>
-                </MudCard>
 
-            </MudItem>
-            <MudItem xs="2">
-                <MudCard Class="d-flex align-center justify-center mud-height-full mud-width-full py-8" Elevation="0">
-                    <MudCardContent Class="p-0">
-                        <div class="d-flex align-center">
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Target="_blank" Link="https://www.google.pl/">
-                                <MudIcon Icon="@Icons.Material.Outlined.Add" Class="mr-2" Style="fill:#fff;" Size="Size.Small" />
-                                <MudText Style="font-weight: 500; font-size: .9rem;" Typo="Typo.body1">Open tool</MudText>
-                            </MudButton>
-                        </div>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
+            @*ElectricalPlanning*@
+            <div class="d-flex align-center" style=" border: 1px solid #D2D2D2; border-radius: 1px; margin: 25px 10px;">
+                <div style="max-height: 185px; max-width: 300px; flex: 1">
+                    <img style="object-fit: cover; min-width: 100%; height: 185px; max-width: 300px; margin-top: -1px; margin-bottom: -1px;" src="images/back-view-woman-sitting-by-table.jpg" alt="Electrical Planning" />
+                </div>
+                <div style="flex: 2; margin: 0 25px;" class="col-10 d-flex flex-column">
+                    <MudText Class="my-2" Style="font-size: 1.1rem; font-weight: 700;" Typo="Typo.h5">Electrical Planning</MudText>
+                    <MudText Style="font-size: .90rem; color: #646464; font-weight: 400; line-height: 1.7;" Typo="Typo.body2">@_description</MudText>
+                    <div class="d-flex justify-space-between" style="background-color: transparent; padding: 16px 16px; margin-right: -17px; margin-left: -17px;">
+                        <MudButton Target="_blank" Link="@_url">
+                            <MudText Style="font-weight: 500; font-size: .9rem;" Typo="Typo.body1">Learn More</MudText>
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Target="_blank" Link="@_url">
+                            <MudIcon Icon="@Icons.Material.Outlined.Add" Class="mr-2" Style="fill:#fff;" Size="Size.Small" />
+                            <MudText Style="font-weight: 500; font-size: .9rem;" Typo="Typo.body1">Open Tool</MudText>
+                        </MudButton>
+                    </div>
+                </div>
+            </div>
+
+            @*MechanicalPlanning*@
+            <div class="d-flex align-center" style=" border: 1px solid #D2D2D2; border-radius: 1px; margin: 15px 10px;">
+                <div style="max-height: 185px; max-width: 300px; flex: 1">
+                    <img style="object-fit: cover; min-width: 100%; height: 185px; max-width: 300px; margin-top: -1px; margin-bottom: -1px;" src="images/mechanic-fixing-car.jpg" alt="Mechanical Planning" />
+                </div>
+                <div style="flex: 2; margin: 0 25px;" class="col-10 d-flex flex-column">
+                    <MudText Class="my-2" Style="font-size: 1.1rem; font-weight: 700;" Typo="Typo.h5">Mechanical Planning</MudText>
+                    <MudText Style="font-size: .90rem; color: #646464; font-weight: 400; line-height: 1.7;" Typo="Typo.body2">@_description</MudText>
+                    <div class="d-flex justify-end" style="background-color: transparent; padding: 16px 16px; margin-right: -17px; margin-left: -17px;">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Target="_blank" Link="@_url">
+                            <MudIcon Icon="@Icons.Material.Outlined.Add" Class="mr-2" Style="fill:#fff;" Size="Size.Small" />
+                            <MudText Style="font-weight: 500; font-size: .9rem;" Typo="Typo.body1">Open Tool</MudText>
+                        </MudButton>
+                    </div>
+                </div>
+            </div>
+
         </MudGrid>
     </div>
 </div>
