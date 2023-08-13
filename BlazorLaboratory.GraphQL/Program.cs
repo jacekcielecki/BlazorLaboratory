@@ -53,6 +53,17 @@ builder.Services.AddScoped<InstructorRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
 builder.Services.AddScoped<UserDataLoader>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -72,6 +83,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseRouting();
 app.UseWebSockets();
+app.UseCors();
 app.UseAuthentication();
 app.UseEndpoints(endpoints =>
 { 
