@@ -1,6 +1,7 @@
 ﻿@page "/graphql"
 @using BlazorLaboratory.BlazorUI.GraphGL
 @inject IGraphClient GraphClient
+@inject ISnackbar Snackbar
 
 <UseGetInstructions Context="result">
     <ChildContent>
@@ -14,11 +15,3 @@
         Loading ...
     </LoadingContent>
 </UseGetInstructions>
-
-@code
-{
-    protected override async Task OnInitializedAsync()
-    {
-        var value = await GraphClient.GetInstructions.ExecuteAsync();
-    }
-}
