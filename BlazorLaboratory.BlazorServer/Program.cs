@@ -33,6 +33,7 @@ builder.Services.AddCors(options =>
 //    .UseRecommendedSerializerSettings()
 //    .UseSqlServerStorage(builder.Configuration.GetConnectionString("Default")));
 //builder.Services.AddHangfireServer();
+//test
 
 
 var app = builder.Build();
