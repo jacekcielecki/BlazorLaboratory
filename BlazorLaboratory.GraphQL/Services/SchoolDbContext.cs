@@ -5,9 +5,9 @@ namespace BlazorLaboratory.GraphQL.Services;
 
 public class SchoolDbContext : DbContext
 {
-    public DbSet<CourseDto> Courses { get; set; }
-    public DbSet<InstructorDto> Instructors { get; set; }
-    public DbSet<StudentDto> Students { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Instructor> Instructors { get; set; }
+    public DbSet<Student> Students { get; set; }
 
     public SchoolDbContext(DbContextOptions<SchoolDbContext> options) : base(options)
     {

@@ -28,7 +28,7 @@ public class Mutation
     public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInputType,
         [Service] ITopicEventSender topicEventSender, [User] User user)
     {
-        CourseDto course = new CourseDto()
+        Dto.Course course = new Dto.Course()
         {
             Id = Guid.NewGuid(),
             Name = courseInputType.Name,
@@ -49,7 +49,7 @@ public class Mutation
         [Service] ITopicEventSender topicEventSender, [User] User user)
     {
         var userId = user.Id;
-        CourseDto? currentCourseDto = await _coursesRepository.GetById(id);
+        Dto.Course? currentCourseDto = await _coursesRepository.GetById(id);
         if (currentCourseDto == null)
         {
             throw new GraphQLException(new Error("Course not found.", "COURSE_NOT_FOUND"));
@@ -63,7 +63,7 @@ public class Mutation
         currentCourseDto.Subject = courseInputType.Subject;
         currentCourseDto.InstructorId = courseInputType.InstructorId;
 
-        CourseDto courseUpdated = await _coursesRepository.Update(currentCourseDto);
+        Dto.Course courseUpdated = await _coursesRepository.Update(currentCourseDto);
 
         string updateCourseTopic = $"{currentCourseDto.Id}_{nameof(Subscription.CourseUpdated)}";
         await topicEventSender.SendAsync(updateCourseTopic, currentCourseDto);
@@ -89,7 +89,7 @@ public class Mutation
     [UseUser]
     public async Task<InstructorResult> CreateInstructor(InstructorInputType instructorInputType)
     {
-        InstructorDto instructor = new InstructorDto()
+        Dto.Instructor instructor = new Dto.Instructor()
         {
             Id = Guid.NewGuid(),
             FirstName = instructorInputType.FirstName,

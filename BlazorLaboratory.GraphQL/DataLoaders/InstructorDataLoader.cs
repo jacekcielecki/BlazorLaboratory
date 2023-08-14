@@ -3,7 +3,7 @@ using BlazorLaboratory.GraphQL.Services;
 
 namespace BlazorLaboratory.GraphQL.DataLoaders;
 
-public class InstructorDataLoader : BatchDataLoader<Guid, InstructorDto>
+public class InstructorDataLoader : BatchDataLoader<Guid, Instructor>
 {
     private readonly InstructorRepository _instructorRepository;
 
@@ -16,7 +16,7 @@ public class InstructorDataLoader : BatchDataLoader<Guid, InstructorDto>
         _instructorRepository = instructorRepository;
     }
 
-    protected override async Task<IReadOnlyDictionary<Guid, InstructorDto>> LoadBatchAsync(IReadOnlyList<Guid> keys, CancellationToken cancellationToken)
+    protected override async Task<IReadOnlyDictionary<Guid, Instructor>> LoadBatchAsync(IReadOnlyList<Guid> keys, CancellationToken cancellationToken)
     {
         var instructors = await _instructorRepository.GetManyByIds(keys);
         return instructors.ToDictionary(x => x.Id);

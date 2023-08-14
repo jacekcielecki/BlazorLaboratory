@@ -12,14 +12,14 @@ public class InstructorRepository
         _contextFactory = contextFactory;
     }
 
-    public async Task<InstructorDto?> GetById(Guid id)
+    public async Task<Instructor?> GetById(Guid id)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Instructors
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<IEnumerable<InstructorDto>> GetManyByIds(IReadOnlyList<Guid> keys)
+    public async Task<IEnumerable<Instructor>> GetManyByIds(IReadOnlyList<Guid> keys)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Instructors
@@ -27,13 +27,13 @@ public class InstructorRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<InstructorDto>> Get()
+    public async Task<IEnumerable<Instructor>> Get()
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Instructors.ToListAsync();
     }
 
-	public async Task<InstructorDto> Create(InstructorDto instructor)
+	public async Task<Instructor> Create(Instructor instructor)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         db.Instructors.Add(instructor);

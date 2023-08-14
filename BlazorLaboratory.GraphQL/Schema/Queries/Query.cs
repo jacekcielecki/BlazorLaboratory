@@ -1,8 +1,6 @@
 ﻿using BlazorLaboratory.GraphQL.Dto;
-using BlazorLaboratory.GraphQL.Filter;
 using BlazorLaboratory.GraphQL.Schema.Queries.Course;
 using BlazorLaboratory.GraphQL.Schema.Queries.Instructor;
-using BlazorLaboratory.GraphQL.Schema.Sorters;
 using BlazorLaboratory.GraphQL.Services;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +12,10 @@ public class Query
     [UseDbContext(typeof(SchoolDbContext))]
     public async Task<IEnumerable<ISearchResultType>> Search(string term, [ScopedService] SchoolDbContext context)
     {
-        IEnumerable<CourseDto> courseDtos = await context.Courses
+        IEnumerable<Dto.Course> courseDtos = await context.Courses
             .Where(c => c.Name.Contains(term))
             .ToListAsync();
-        IEnumerable<InstructorDto> instructorDtos = await context.Instructors
+        IEnumerable<Dto.Instructor> instructorDtos = await context.Instructors
             .Where(c => c.FirstName.Contains(term) || c.LastName.Contains(term))
             .ToListAsync();
 

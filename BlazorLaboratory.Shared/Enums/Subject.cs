@@ -1,4 +1,4 @@
-﻿namespace BlazorLaboratory.GraphQL.Enums;
+﻿namespace BlazorLaboratory.Shared.Enums;
 
 public enum Subject
 {

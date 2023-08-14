@@ -1,4 +1,4 @@
-﻿using BlazorLaboratory.GraphQL.Enums;
+﻿using BlazorLaboratory.Shared.Enums;
 
 namespace BlazorLaboratory.GraphQL.Schema.Mutations.Course;
 

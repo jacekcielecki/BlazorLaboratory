@@ -1,8 +1,7 @@
-﻿using BlazorLaboratory.GraphQL.Enums;
-using BlazorLaboratory.GraphQL.Schema;
-using BlazorLaboratory.GraphQL.Schema.Queries.Course;
+﻿using BlazorLaboratory.GraphQL.Schema.Queries.Course;
 using BlazorLaboratory.GraphQL.Schema.Queries.Instructor;
 using BlazorLaboratory.GraphQL.Schema.Queries.Student;
+using BlazorLaboratory.Shared.Enums;
 using Bogus;
 
 namespace BlazorLaboratory.GraphQL;

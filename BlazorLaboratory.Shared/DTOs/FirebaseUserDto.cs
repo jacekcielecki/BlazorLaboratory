@@ -1,6 +1,6 @@
-﻿namespace BlazorLaboratory.GraphQL.Schema.Queries.User;
+﻿namespace BlazorLaboratory.Shared.DTOs;
 
-public class UserType
+public class FirebaseUserDto
 {
     public string? Id { get; set; }
     public string? Username { get; set; }

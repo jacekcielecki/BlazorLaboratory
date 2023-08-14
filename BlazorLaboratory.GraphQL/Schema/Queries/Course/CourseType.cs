@@ -1,8 +1,8 @@
 ﻿using BlazorLaboratory.GraphQL.DataLoaders;
-using BlazorLaboratory.GraphQL.Enums;
+using BlazorLaboratory.GraphQL.Schema.Queries.FirebaseUser;
 using BlazorLaboratory.GraphQL.Schema.Queries.Instructor;
 using BlazorLaboratory.GraphQL.Schema.Queries.Student;
-using BlazorLaboratory.GraphQL.Schema.Queries.User;
+using BlazorLaboratory.Shared.Enums;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 
@@ -35,7 +35,7 @@ public class CourseType : ISearchResultType
     [IsProjected(true)]
     public string? CreatorId { get; set; }
 
-    public async Task<UserType?> Creator([Service] UserDataLoader userDataLoader)
+    public async Task<FirebaseUserType?> Creator([Service] FirebaseUserDataLoader userDataLoader)
     {
         if (CreatorId.IsNullOrEmpty())
         {

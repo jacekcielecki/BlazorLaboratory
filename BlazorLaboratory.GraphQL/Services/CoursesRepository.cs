@@ -12,19 +12,19 @@ public class CoursesRepository
         _contextFactory = contextFactory;
     }
 
-    public async Task<IEnumerable<CourseDto>> Get()
+    public async Task<IEnumerable<Course>> Get()
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Courses.ToListAsync();
     }
 
-    public async Task<CourseDto?> GetById(Guid id)
+    public async Task<Course?> GetById(Guid id)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         return await db.Courses.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<CourseDto> Create(CourseDto course)
+    public async Task<Course> Create(Course course)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         db.Courses.Add(course);
@@ -33,7 +33,7 @@ public class CoursesRepository
         return course;
     }
 
-    public async Task<CourseDto> Update(CourseDto course)
+    public async Task<Course> Update(Course course)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
         db.Courses.Update(course);
@@ -45,7 +45,7 @@ public class CoursesRepository
     public async Task<bool> Delete(Guid id)
     {
         await using SchoolDbContext db = await _contextFactory.CreateDbContextAsync();
-        CourseDto course = new CourseDto()
+        Course course = new Course()
         {
             Id = id
         };
