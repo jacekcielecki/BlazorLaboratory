@@ -14,7 +14,7 @@ else
                 <th></th>
                 <th>Name</th>
                 <th>Surname</th>
-                <th>Role</th>
+                <th>City</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -26,7 +26,7 @@ else
                     <th>@user.Id</th>
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
-                    <td>@user.Role</td>
+                    <td>@(user.ContactDetails?.City ?? "unknown")</td>
                     <td><img src="icons/edit.svg" width="20px" height="20px" alt="edit"/></td>
                     <td @onclick="() => DeleteItem(user.Id)"><img src="icons/delete.svg" width="20px" height="20px" alt="delete" /></td>
                 </tr>

@@ -5,6 +5,6 @@ namespace BlazorLaboratory.BlazorUI.ApiEndpoints;
 
 public interface IUserClient
 {
-    [Get("/api/Users")]
-    Task<List<UserDto>> GetAll();
+    [Get("/api/User")]
+    Task<List<UserModel>> GetAll();
 }
