@@ -13,5 +13,6 @@
 		<PackageReference Include="MudBlazor" Version="6.0.13" />
 		<PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
+		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.0-preview.18" />
 	</ItemGroup>
 </Project>

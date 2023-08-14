@@ -1,0 +1,208 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+type Query {
+  search(term: String!): [SearchResult!]!
+  instructions: String! @deprecated(reason: "This query is deprecated.")
+  offsetPagedCourses(skip: Int take: Int): OffsetPagedCoursesCollectionSegment
+  pagedCourses("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String where: CourseTypeFilterInput order: [CourseTypeSortInput!]): PagedCoursesConnection
+  courses: [CourseType!]!
+  courseById(id: UUID!): CourseType!
+  instructors: [InstructorType!]!
+}
+
+type Mutation {
+  createCourse(courseInputType: CourseInputTypeInput!): CourseResult!
+  updateCourse(id: UUID! courseInputType: CourseInputTypeInput!): CourseResult!
+  deleteCourse(id: UUID!): Boolean!
+  createInstructor(instructorInputType: InstructorInputTypeInput!): InstructorResult!
+}
+
+type Subscription {
+  courseCreated: CourseResult!
+  courseUpdated(courseId: UUID!): CourseResult!
+}
+
+type CourseType {
+  instructor: InstructorType!
+  description: String!
+  creator: UserType
+  id: UUID!
+  name: String!
+  subject: Subject!
+  instructorId: UUID!
+  students: [StudentType!]
+  creatorId: String
+}
+
+type InstructorType {
+  id: UUID!
+  firstName: String
+  lastName: String
+  salary: Float
+}
+
+input CourseTypeFilterInput {
+  and: [CourseTypeFilterInput!]
+  or: [CourseTypeFilterInput!]
+  id: UuidOperationFilterInput
+  name: StringOperationFilterInput
+  subject: SubjectOperationFilterInput
+  instructorId: UuidOperationFilterInput
+  creatorId: StringOperationFilterInput
+}
+
+input CourseTypeSortInput {
+  name: SortEnumType
+  subject: SortEnumType
+  creatorId: SortEnumType
+}
+
+"A segment of a collection."
+type OffsetPagedCoursesCollectionSegment {
+  "Information to aid in pagination."
+  pageInfo: CollectionSegmentInfo!
+  "A flattened list of the items."
+  items: [CourseType!]
+  totalCount: Int!
+}
+
+"A connection to a list of items."
+type PagedCoursesConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [PagedCoursesEdge!]
+  "A flattened list of the nodes."
+  nodes: [CourseType!]
+  "Identifies the total count of items in the connection."
+  totalCount: Int!
+}
+
+input UuidOperationFilterInput {
+  eq: UUID
+  neq: UUID
+  in: [UUID]
+  nin: [UUID]
+  gt: UUID
+  ngt: UUID
+  gte: UUID
+  ngte: UUID
+  lt: UUID
+  nlt: UUID
+  lte: UUID
+  nlte: UUID
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input SubjectOperationFilterInput {
+  eq: Subject
+  neq: Subject
+  in: [Subject!]
+  nin: [Subject!]
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+"Information about the offset pagination."
+type CollectionSegmentInfo {
+  "Indicates whether more items exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more items exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+  "Indicates whether more edges exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+
+"An edge in a connection."
+type PagedCoursesEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: CourseType!
+}
+
+scalar UUID
+
+type UserType {
+  id: String
+  username: String
+}
+
+input InstructorInputTypeInput {
+  firstName: String!
+  lastName: String!
+  salary: Float!
+}
+
+type InstructorResult {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  salary: Float!
+}
+
+input CourseInputTypeInput {
+  name: String!
+  subject: Subject!
+  instructorId: UUID!
+}
+
+type CourseResult {
+  id: UUID!
+  name: String!
+  subject: Subject!
+  instructorId: UUID!
+  creatorId: String
+}
+
+union SearchResult = CourseType | InstructorType
+
+enum Subject {
+  MATHEMATICS
+  SCIENCE
+  HISTORY
+}
+
+type StudentType {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  gpa: Float!
+}

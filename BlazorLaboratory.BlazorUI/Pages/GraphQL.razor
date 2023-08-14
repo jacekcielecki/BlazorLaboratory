@@ -1,0 +1,24 @@
+﻿@page "/graphql"
+@using BlazorLaboratory.BlazorUI.GraphGL
+@inject IGraphClient GraphClient
+
+<UseGetInstructions Context="result">
+    <ChildContent>
+        Success
+        @result.Instructions
+    </ChildContent>
+    <ErrorContent>
+        Something went wrong ...<br />
+    </ErrorContent>
+    <LoadingContent>
+        Loading ...
+    </LoadingContent>
+</UseGetInstructions>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        var value = await GraphClient.GetInstructions.ExecuteAsync();
+    }
+}
