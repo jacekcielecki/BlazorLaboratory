@@ -12,6 +12,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
-builder.Services.AddRefitClient<IUserClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(appConfig["ApiUri"]!));
+builder.Services.AddRefitClient<IUserClient>().ConfigureHttpClient(httpClient =>
+{
+    httpClient.BaseAddress = new Uri(appConfig["ApiUri"]!);
+    httpClient.AddDefaultSecurityHeaders();
+});
 
 await builder.Build().RunAsync();
