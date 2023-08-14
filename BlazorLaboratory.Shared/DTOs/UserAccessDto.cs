@@ -1,4 +1,4 @@
-﻿namespace BlazorLaboratory.BlazorUI.Dto;
+﻿namespace BlazorLaboratory.Shared.DTOs;
 
 public class UserAccessDto
 {

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorLaboratory.DataAccess\BlazorLaboratory.DataAccess.csproj" />
+    <ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
   </ItemGroup>
 
 </Project>

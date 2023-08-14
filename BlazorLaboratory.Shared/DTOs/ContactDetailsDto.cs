@@ -1,6 +1,6 @@
-﻿namespace BlazorLaboratory.BlazorUI.Dto;
+﻿namespace BlazorLaboratory.Shared.DTOs;
 
-public class ContactDetailsModel
+public class ContactDetailsDto
 {
     public int Id { get; set; }
     public string? PhoneNumber { get; set; }

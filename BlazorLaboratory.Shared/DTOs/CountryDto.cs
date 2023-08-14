@@ -1,6 +1,6 @@
-﻿namespace BlazorLaboratory.BlazorServer.Data;
+﻿namespace BlazorLaboratory.Shared.DTOs;
 
-public class CountryInfo
+public class CountryDto
 {
     public string Name { get; set; }
     public List<string> Languages { get; set; }

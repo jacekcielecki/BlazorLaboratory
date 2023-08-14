@@ -27,4 +27,8 @@
     </PackageReference>
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
+	</ItemGroup>
+
 </Project>

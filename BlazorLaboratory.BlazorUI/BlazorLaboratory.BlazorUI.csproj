@@ -15,4 +15,9 @@
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
 		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.0-preview.18" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
+	</ItemGroup>
+
 </Project>

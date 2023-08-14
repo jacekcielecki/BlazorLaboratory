@@ -1,4 +1,4 @@
-﻿@using BlazorLaboratory.BlazorServer.Data
+﻿@using BlazorLaboratory.Shared.DTOs
 @using Microsoft.AspNetCore.Components
 @inject ISnackbar Snackbar
 
@@ -11,13 +11,13 @@
             </MudText>
         </TitleContent>
         <DialogContent>
-            <MudSelect T="CountryInfo" @bind-value="Country" Label="Choose country" AnchorOrigin="Origin.BottomCenter" Class="mb-4">
+            <MudSelect T="CountryDto" @bind-value="Country" Label="Choose country" AnchorOrigin="Origin.BottomCenter" Class="mb-4">
                 @foreach (var country in _availableCountries)
                 {
                     <MudSelectItem Value="@country">@country.Name</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect T="LanguageInfo" @bind-value="_language" Label="Choose language" AnchorOrigin="Origin.BottomCenter">
+            <MudSelect T="LanguageDto" @bind-value="_language" Label="Choose language" AnchorOrigin="Origin.BottomCenter">
                 @foreach (var language in _availableLanguages.Where(x => _country.Languages.Contains(x.Name)))
                 {
                     <MudSelectItem  Value="@language">@language.Name</MudSelectItem>
@@ -34,9 +34,9 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    LanguageInfo? _language { get; set; }
-    CountryInfo? _country;
-    CountryInfo Country
+    LanguageDto? _language { get; set; }
+    CountryDto? _country;
+    CountryDto Country
     {
         get => _country;
         set
@@ -46,7 +46,7 @@
         }
     }
 
-    private readonly List<CountryInfo> _availableCountries = new List<CountryInfo>()
+    private readonly List<CountryDto> _availableCountries = new List<CountryDto>()
     {
         new() { Name = "Global", Languages = new List<string>{"English"} },
         new() { Name = "Australia", Languages = new List<string>{"English"} },
@@ -56,7 +56,7 @@
         new() { Name = "United Kingdom", Languages = new List<string>{"English"} },
     };
 
-    private readonly List<LanguageInfo> _availableLanguages = new List<LanguageInfo>()
+    private readonly List<LanguageDto> _availableLanguages = new List<LanguageDto>()
     {
         new() { Name = "English", Code = "en-US" },
         new() { Name = "Dutch", Code = "nl-BE" },

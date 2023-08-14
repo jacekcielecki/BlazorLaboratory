@@ -1,5 +1,5 @@
 ﻿using BlazorLaboratory.BlazorUI.ApiEndpoints;
-using BlazorLaboratory.BlazorUI.Dto;
+using BlazorLaboratory.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -10,7 +10,7 @@ public partial class DapperTest
     [Inject] private IUserClient UserClient { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
-    private List<UserModel>? _users;
+    private List<UserDto>? _users;
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,11 +21,11 @@ public partial class DapperTest
         catch (Exception e)
         {
             Snackbar.Add($"{e.Message}, returning mocked data instead!", Severity.Info);
-            _users = new List<UserModel>
+            _users = new List<UserDto>
             {
-                new () { Id = new Guid(), FirstName = "John1", LastName = "Scott1", ContactDetailsId = 1, ContactDetails = new ContactDetailsModel { City = "London", Id = 1, PhoneNumber = "123456789"}},
-                new () { Id = new Guid(), FirstName = "John2", LastName = "Scott2", ContactDetailsId = 2, ContactDetails = new ContactDetailsModel { City = "London", Id = 1, PhoneNumber = "123456789"}},
-                new () { Id = new Guid(), FirstName = "John3", LastName = "Scott3", ContactDetailsId = 3, ContactDetails = new ContactDetailsModel { City = "London", Id = 1, PhoneNumber = "123456789"}},
+                new () { Id = new Guid(), FirstName = "John1", LastName = "Scott1", ContactDetailsId = 1, ContactDetails = new ContactDetailsDto { City = "London", Id = 1, PhoneNumber = "123456789"}},
+                new () { Id = new Guid(), FirstName = "John2", LastName = "Scott2", ContactDetailsId = 2, ContactDetails = new ContactDetailsDto { City = "London", Id = 1, PhoneNumber = "123456789"}},
+                new () { Id = new Guid(), FirstName = "John3", LastName = "Scott3", ContactDetailsId = 3, ContactDetails = new ContactDetailsDto { City = "London", Id = 1, PhoneNumber = "123456789"}},
             };
         }
     }

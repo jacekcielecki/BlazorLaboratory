@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿namespace BlazorLaboratory.Shared.Enums;
 
-namespace BlazorLaboratory.BlazorUI.Enum;
+using System.ComponentModel;
 
 public enum UserRole
 {
