@@ -1,0 +1,7 @@
+mutation UpdateCourse($id: UUID!, $courseInputType: CourseInputTypeInput!) {
+	updateCourse(id: $id, courseInputType: $courseInputType) {
+		id
+		name
+		subject
+	}
+}

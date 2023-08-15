@@ -19,7 +19,7 @@ public partial class GraphPage
 
     private async Task DeleteItem(Guid id)
     {
-        DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.ExtraLarge, NoHeader = false };
+        DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false };
         DialogParameters parameters = new()
         {
             { "ButtonText", "Confirm" },
@@ -33,14 +33,14 @@ public partial class GraphPage
         }
     }
 
-    private async Task EditItem(Guid id)
+    private async Task CreateItem()
     {
-        DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.ExtraLarge, NoHeader = false };
-        var dialog = DialogService.Show<EditCourseDialog>("Edit Course", dialogOptions);
+        DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false };
+        var dialog = DialogService.Show<CreateEditCourseDialog>("Create Course", dialogOptions);
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            Snackbar.Add("Item updated");
+            Snackbar.Add("Item created");
         }
     }
 }

@@ -1,0 +1,7 @@
+mutation CreateCourse($courseInputType: CourseInputTypeInput!) {
+	createCourse(courseInputType: $courseInputType) {
+		id
+		name
+		subject
+	}
+}

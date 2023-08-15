@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Components
+@using BlazorLaboratory.Shared.Enums
+@using BlazorLaboratory.Shared.DTOs
+<MudDialog>
+    <DialogContent>
+        @if (_showLoadIndicator)
+        {
+            <div class="text-center">
+                <MudProgressCircular Color="Color.Info" Indeterminate="true" />
+            </div>
+        }
+        else
+        {
+            <div class="row my-2">
+                <div class="col-sm">
+                    <MudTextField @bind-Value="_newCourseName" Label="Name" Margin="Margin.Normal" />
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-sm">
+                    <MudSelect @bind-Value="_newCourseSubject" Label="Subject">
+                        @foreach (CourseSubject subject in Enum.GetValues(typeof(CourseSubject)))
+                        {
+                            <MudSelectItem Value="@subject">@subject</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-sm">
+                    <MudSelect @bind-Value="_newCourseInstructor" Label="Subject" ToStringFunc="@_instructorConvertFunc">
+                        @foreach (InstructorDto instructor in _instructors)
+                        {
+                            <MudSelectItem Value="@instructor" />
+                        }
+                    </MudSelect>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-sm text-end">
+                    <button class="btn btn-outline-primary" @onclick="Cancel" type="button">Cancel</button>
+                    <button class="btn btn-primary" @onclick="Submit">Save</button>
+                </div>
+            </div>
+        }
+    </DialogContent>
+</MudDialog>
+
