@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLaboratory.WebApi.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLaboratory.GraphQL", "BlazorLaboratory.GraphQL\BlazorLaboratory.GraphQL.csproj", "{F50834AE-31B3-42A2-A65F-89D0567DD7B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorLaboratory.Shared", "BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj", "{848F97A7-BBD0-46CC-9593-8537D2342427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLaboratory.Shared", "BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj", "{848F97A7-BBD0-46CC-9593-8537D2342427}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

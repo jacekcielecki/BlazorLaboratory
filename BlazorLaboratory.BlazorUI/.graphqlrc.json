@@ -5,7 +5,7 @@
     "strawberryShake": {
       "name": "GraphClient",
       "namespace": "BlazorLaboratory.BlazorUI.GraphGL",
-      "url": "https://localhost:7258/graphql/",
+      "url": "http://localhost:5088/graphql",
       "records": {
         "inputs": false,
         "entities": false

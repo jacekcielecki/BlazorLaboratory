@@ -1,0 +1,33 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <div class="m-2">
+            @if (CancelButtonHidden != true)
+            {
+                <button class="btn btn-outline-primary" @onclick="@Cancel" type="button">Cancel</button>
+            }
+            <button class="btn btn-primary" @onclick="@Submit">@ButtonText</button>
+        </div>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string ContentText { get; set; }
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public bool? CancelButtonHidden { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(ContentText))
+            ContentText = "Are you sure?";
+
+        if (string.IsNullOrEmpty(ButtonText))
+            ButtonText = "Ok";
+    }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,46 @@
+﻿@page "/graphql"
+@using BlazorLaboratory.BlazorUI.GraphGL
+@inject IGraphClient GraphClient
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+
+<UseGetCourses Context="graphResult">
+    <ChildContent>
+        <button class="btn">Add</button>
+        <div class="overflow-x-auto">
+            <table class="table table-xs">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Creator</th>
+                    <th>Instructor</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var course in graphResult.Courses)
+                {
+                    <tr>
+                        <th>@course.Id</th>
+                        <td>@course.Name</td>
+                        <td>@course.Subject</td>
+                        <td>@(course.Creator?.Username ?? "unknown")</td>
+                        <td>@(course.Instructor.FirstName + course.Instructor.LastName)</td>
+                        <td @onclick="() => EditItem(course.Id)"><img src="icons/edit.svg" width="20" height="20" alt="edit" /></td>
+                        <td @onclick="() => DeleteItem(course.Id)"><img src="icons/delete.svg" width="20" height="20" alt="delete" /></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        Something went wrong ...<br />
+    </ErrorContent>
+    <LoadingContent>
+        Loading ...
+    </LoadingContent>
+</UseGetCourses>

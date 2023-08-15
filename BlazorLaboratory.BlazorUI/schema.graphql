@@ -35,7 +35,7 @@ type Subscription {
 type CourseType {
   instructor: InstructorType!
   description: String!
-  creator: UserType
+  creator: FirebaseUserType
   id: UUID!
   name: String!
   subject: Subject!
@@ -160,7 +160,7 @@ type PagedCoursesEdge {
 
 scalar UUID
 
-type UserType {
+type FirebaseUserType {
   id: String
   username: String
 }

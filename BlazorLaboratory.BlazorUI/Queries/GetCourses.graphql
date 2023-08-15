@@ -1,0 +1,21 @@
+query GetCourses {
+    courses {
+    id,
+    name,
+    subject,
+    instructor {
+      firstName,
+      lastName
+      salary
+    }
+    students {
+      firstName, 
+      lastName
+    },
+    creatorId
+    creator {
+      id
+      username
+    }
+  }
+}
