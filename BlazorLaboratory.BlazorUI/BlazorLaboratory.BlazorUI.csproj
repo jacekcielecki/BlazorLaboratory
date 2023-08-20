@@ -15,6 +15,8 @@
 
 	<ItemGroup>
 	  <None Remove="GraphQL\Queries\GetCourseById.graphql" />
+	  <None Remove="GraphQL\Subscriptions\CourseCreated.graphql" />
+	  <None Remove="GraphQL\Subscriptions\CourseUpdated.graphql" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -25,14 +27,11 @@
 		<PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
 		<PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
 		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.0-preview.18" />
+		<PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.5.0-preview.18" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="GraphQL\Subscriptions\" />
 	</ItemGroup>
 
 </Project>

@@ -3,6 +3,14 @@
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
 
+@* <UseCourseCreated Context="courseCreatedRes">
+    <ChildContent>
+        <div style="color: red">
+            <h2>Subscription triggered: Course @courseCreatedRes.CourseCreated.Name has been created!")</h2>
+        </div>
+    </ChildContent>
+</UseCourseCreated> *@
+
 <UseGetCourses Context="graphResult">
     <ChildContent>
         <button class="btn" @onclick="@(() => OpenCreateEditDialog(null))">Add</button>

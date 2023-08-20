@@ -11,6 +11,10 @@ public partial class GraphPage
         try
         {
             var valueFromGraph = await GraphClient.GetInstructions.ExecuteAsync();
+            //var session = GraphClient.CourseCreated.Watch().Subscribe(result =>
+            //{
+            //    Snackbar.Add($"Subscription triggered: Course {result?.Data?.CourseCreated.Name} has been created!", Severity.Warning);
+            //});
         }
         catch (Exception e)
         {
