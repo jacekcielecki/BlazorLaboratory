@@ -1,9 +1,9 @@
-﻿using BlazorLaboratory.BlazorUI.GraphGL;
+﻿using BlazorLaboratory.BlazorUI.GraphQLGenerated;
 using BlazorLaboratory.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using StrawberryShake;
-using Subject = BlazorLaboratory.BlazorUI.GraphGL.Subject;
+using Subject = BlazorLaboratory.BlazorUI.GraphQLGenerated.Subject;
 
 namespace BlazorLaboratory.BlazorUI.Pages.GraphPage;
 
@@ -56,7 +56,6 @@ public partial class CreateEditCourseDialog
         }
     }
 
-
     private async Task GetItemToUpdateDetails()
     {
         try
@@ -87,7 +86,7 @@ public partial class CreateEditCourseDialog
                 IOperationResult<IUpdateCourseResult> updateResult = await GraphClient.UpdateCourse.ExecuteAsync((Guid)ItemToUpdateId, new CourseInputTypeInput
                 {
                    Name = _newCourseName,
-                   Subject = Subject.Science,
+                   Subject = (Subject)_newCourseSubject,
                    InstructorId = _newCourseInstructor.Id
                 });
                 if (updateResult.IsErrorResult())
@@ -102,7 +101,7 @@ public partial class CreateEditCourseDialog
                 IOperationResult<ICreateCourseResult> createResult = await GraphClient.CreateCourse.ExecuteAsync(new CourseInputTypeInput
                 {
                     Name = _newCourseName,
-                    Subject = Subject.Science,
+                    Subject = (Subject)_newCourseSubject,
                     InstructorId = _newCourseInstructor.Id
                 });
                 if (createResult.IsErrorResult())

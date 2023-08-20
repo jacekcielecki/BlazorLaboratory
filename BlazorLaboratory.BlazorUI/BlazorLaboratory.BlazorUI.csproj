@@ -7,14 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <GraphQL Remove="mutations\DeleteCourse.graphql" />
-	  <GraphQL Remove="mutations\UpdateCourse.graphql" />
-	  <GraphQL Remove="queries\CreateCourse.graphql" />
-	  <GraphQL Remove="queries\GetInstructors.graphql" />
+	  <GraphQL Remove="GraphQL\Mutations\DeleteCourse.graphql" />
+	  <GraphQL Remove="GraphQL\Mutations\UpdateCourse.graphql" />
+	  <GraphQL Remove="GraphQL\Queries\CreateCourse.graphql" />
+	  <GraphQL Remove="GraphQL\Queries\GetInstructors.graphql" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Queries\GetCourseById.graphql" />
+	  <None Remove="GraphQL\Queries\GetCourseById.graphql" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,6 +29,10 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="GraphQL\Subscriptions\" />
 	</ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@
   "extensions": {
     "strawberryShake": {
       "name": "GraphClient",
-      "namespace": "BlazorLaboratory.BlazorUI.GraphGL",
+      "namespace": "BlazorLaboratory.BlazorUI.GraphQLGenerated",
       "url": "http://localhost:5088/graphql",
       "records": {
         "inputs": false,
