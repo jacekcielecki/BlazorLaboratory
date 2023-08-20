@@ -1,0 +1,34 @@
+﻿@page "/login"
+@using BlazorLaboratory.BlazorUI.Services.Interfaces;
+@inject IAuthorizationManager AuthorizationManager
+@inject ILocalStorageService LocalStorageService
+@inject ISnackbar Snackbar
+@inject FirebaseToken FirebaseToken
+
+<h3>Login</h3>
+
+<MudTextField @bind-Value="username" Class="my-3" Label="Username" Variant="Variant.Outlined" Required/>
+<MudTextField @bind-Value="password" Class="my-3" Label="Password" Variant="Variant.Outlined" Required />
+<MudButton @onclick="Submit" Class="my-9">Login</MudButton>
+
+ @code {
+    string username = "";
+    string password = "";
+
+    async Task Submit()
+    {
+        try
+        {
+            var token = await AuthorizationManager.Login(username, password);
+            Snackbar.Add(token, Severity.Success);
+            await LocalStorageService.SetItem("token", token);
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add(e.Message, Severity.Error);
+            username = "";
+            password = "";
+        }
+
+    }
+}
