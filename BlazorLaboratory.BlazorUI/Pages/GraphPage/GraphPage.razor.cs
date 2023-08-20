@@ -55,9 +55,5 @@ public partial class GraphPage
         var parameters = new DialogParameters { ["ItemToUpdateId"] = id };
         var dialog = DialogService.Show<CreateEditCourseDialog>(id != null ? "Edit Course" : "Create Course", parameters, dialogOptions);
         var result = await dialog.Result;
-        if (!result.Cancelled)
-        {
-            Snackbar.Add("Item created");
-        }
     }
 }

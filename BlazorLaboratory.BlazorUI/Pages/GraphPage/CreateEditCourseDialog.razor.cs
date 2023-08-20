@@ -82,16 +82,35 @@ public partial class CreateEditCourseDialog
     {
         try
         {
-            IOperationResult<ICreateCourseResult> result 
-                = await GraphClient.CreateCourse.ExecuteAsync(new CourseInputTypeInput
+            if (ItemToUpdateId != null)
+            { 
+                IOperationResult<IUpdateCourseResult> updateResult = await GraphClient.UpdateCourse.ExecuteAsync((Guid)ItemToUpdateId, new CourseInputTypeInput
+                {
+                   Name = _newCourseName,
+                   Subject = Subject.Science,
+                   InstructorId = _newCourseInstructor.Id
+                });
+                if (updateResult.IsErrorResult())
+                {
+                    Snackbar.Add(updateResult.Errors.First().Message, Severity.Error);
+                    return;
+                }
+                Snackbar.Add($"Course {updateResult.Data.UpdateCourse.Name} has been successfully updated");
+            }
+            else
             {
-                Name = _newCourseName,
-                Subject = Subject.Science,
-                InstructorId = _newCourseInstructor.Id
-            });
-            if (result.IsErrorResult())
-            {
-                Snackbar.Add(result.Errors.First().Message, Severity.Error);
+                IOperationResult<ICreateCourseResult> createResult = await GraphClient.CreateCourse.ExecuteAsync(new CourseInputTypeInput
+                {
+                    Name = _newCourseName,
+                    Subject = Subject.Science,
+                    InstructorId = _newCourseInstructor.Id
+                });
+                if (createResult.IsErrorResult())
+                {
+                    Snackbar.Add(createResult.Errors.First().Message, Severity.Error);
+                    return;
+                }
+                Snackbar.Add($"Course {createResult.Data.CreateCourse.Name} has been successfully created");
             }
         }
         catch (Exception e)
