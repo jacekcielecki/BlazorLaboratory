@@ -28,6 +28,6 @@ public class AuthorizationManager : IAuthorizationManager
         FirebaseAuthClient firebaseClient = new FirebaseAuthClient(config);
         UserCredential? userCredential = await firebaseClient.SignInWithEmailAndPasswordAsync(email, password);
 
-        return userCredential.User.Credential.IdToken;
+        return = userCredential.User.Credential.IdToken;
     }
 }
