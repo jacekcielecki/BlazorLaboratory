@@ -49,10 +49,11 @@ public partial class GraphPage
         }
     }
 
-    private async Task CreateItem()
+    private async Task OpenCreateEditDialog(Guid? id)
     {
         DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true, NoHeader = false };
-        var dialog = DialogService.Show<CreateEditCourseDialog>("Create Course", dialogOptions);
+        var parameters = new DialogParameters { ["ItemToUpdateId"] = id };
+        var dialog = DialogService.Show<CreateEditCourseDialog>(id != null ? "Edit Course" : "Create Course", parameters, dialogOptions);
         var result = await dialog.Result;
         if (!result.Cancelled)
         {

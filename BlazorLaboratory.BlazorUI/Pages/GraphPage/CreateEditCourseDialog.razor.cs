@@ -3,12 +3,14 @@ using BlazorLaboratory.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using StrawberryShake;
+using Subject = BlazorLaboratory.BlazorUI.GraphGL.Subject;
 
 namespace BlazorLaboratory.BlazorUI.Pages.GraphPage;
 
 public partial class CreateEditCourseDialog
 {
     [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = null!;
+    [Parameter] public Guid? ItemToUpdateId { get; set; }
     [Inject] private IGraphClient GraphClient { get; set; } = null!;
     [Inject] private ISnackbar Snackbar { get; set; } = null!;
 
@@ -21,9 +23,18 @@ public partial class CreateEditCourseDialog
 
     protected override async Task OnInitializedAsync()
     {
+        await GetInstructors();
+        if (ItemToUpdateId != null)
+        {
+            await GetItemToUpdateDetails();
+        }
+    }
+
+    private async Task GetInstructors()
+    {
         try
         {
-            var instructorsResult = await GraphClient.GetInstructors.ExecuteAsync();
+            IOperationResult<IGetInstructorsResult> instructorsResult = await GraphClient.GetInstructors.ExecuteAsync();
             if (instructorsResult.IsErrorResult())
             {
                 Snackbar.Add(instructorsResult.Errors.First().Message, Severity.Error);
@@ -45,11 +56,34 @@ public partial class CreateEditCourseDialog
         }
     }
 
+
+    private async Task GetItemToUpdateDetails()
+    {
+        try
+        {
+            IOperationResult<IGetCourseByIdResult> courseToUpdateResult = await GraphClient.GetCourseById.ExecuteAsync((Guid)ItemToUpdateId!);
+            if (courseToUpdateResult.IsErrorResult())
+            {
+                Snackbar.Add(courseToUpdateResult.Errors.First().Message, Severity.Error);
+                return;
+            }
+
+            _newCourseName = courseToUpdateResult.Data!.CourseById.Name;
+            _newCourseSubject = (CourseSubject)courseToUpdateResult.Data.CourseById.Subject;
+            _newCourseInstructor = _instructors.FirstOrDefault(x => x.Id == courseToUpdateResult.Data.CourseById.InstructorId)!;
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add(e.Message, Severity.Error);
+        }
+    }
+
     private async Task Save()
     {
         try
         {
-            var result = await GraphClient.CreateCourse.ExecuteAsync(new CourseInputTypeInput
+            IOperationResult<ICreateCourseResult> result 
+                = await GraphClient.CreateCourse.ExecuteAsync(new CourseInputTypeInput
             {
                 Name = _newCourseName,
                 Subject = Subject.Science,

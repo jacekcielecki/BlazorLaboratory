@@ -1,0 +1,13 @@
+query GetCourseById($id: UUID!){
+    courseById(id: $id){
+    id,
+    name,
+    subject,
+    description,
+    instructorId,
+    instructor {
+        firstName,
+        lastName
+    }
+    }
+}

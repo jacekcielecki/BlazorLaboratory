@@ -6,7 +6,7 @@
 
 <UseGetCourses Context="graphResult">
     <ChildContent>
-        <button class="btn" @onclick="@CreateItem">Add</button>
+        <button class="btn" @onclick="@(() => OpenCreateEditDialog(null))">Add</button>
         <div class="overflow-x-auto">
             <table class="table table-xs">
                 <thead>
@@ -29,8 +29,8 @@
                         <td>@course.Subject</td>
                         <td>@(course.Creator?.Username ?? "unknown")</td>
                         <td>@(course.Instructor.FirstName + course.Instructor.LastName)</td>
-                        <td><img src="icons/edit.svg" width="20" height="20" alt="edit" /></td>
-                        <td @onclick="() => DeleteItem(course.Id)"><img src="icons/delete.svg" width="20" height="20" alt="delete" /></td>
+                        <td @onclick="@(() => OpenCreateEditDialog(course.Id))" style="cursor: pointer;"><img src="icons/edit.svg" width="20" height="20" alt="edit" /></td>
+                        <td @onclick="() => DeleteItem(course.Id)" style="cursor: pointer;"><img src="icons/delete.svg" width="20" height="20" alt="delete" /></td>
                     </tr>
                 }
                 </tbody>
