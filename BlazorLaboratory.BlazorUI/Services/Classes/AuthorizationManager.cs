@@ -6,11 +6,13 @@ namespace BlazorLaboratory.BlazorUI.Services.Classes;
 
 public class AuthorizationManager : IAuthorizationManager
 {
-    private IConfiguration _config { get; set; }
+    private IConfiguration _config;
+    private readonly FirebaseToken _token;
 
-    public AuthorizationManager(IConfiguration config)
+    public AuthorizationManager(IConfiguration config, FirebaseToken token)
     {
         _config = config;
+        _token = token;
     }
 
     public async Task<string> Login(string email, string password)
@@ -28,6 +30,7 @@ public class AuthorizationManager : IAuthorizationManager
         FirebaseAuthClient firebaseClient = new FirebaseAuthClient(config);
         UserCredential? userCredential = await firebaseClient.SignInWithEmailAndPasswordAsync(email, password);
 
-        return = userCredential.User.Credential.IdToken;
+        _token.Value = userCredential.User.Credential.IdToken;
+        return userCredential.User.Credential.IdToken;
     }
 }
