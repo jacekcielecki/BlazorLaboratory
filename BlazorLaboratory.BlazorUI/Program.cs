@@ -23,8 +23,8 @@ builder.Services.AddGraphClient()
     .ConfigureHttpClient((services, client) =>
     {
         FirebaseToken token = services.GetRequiredService<FirebaseToken>();
-        client.BaseAddress = new Uri(appConfig["GraphUri"]!);
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
+        client.BaseAddress = new Uri(appConfig["GraphUri"]!);
     })
     .ConfigureWebSocketClient(client => client.Uri = new Uri(appConfig["GraphWebSocketUri"]!));
 builder.Services.AddRefitClient<IUserClient>().ConfigureHttpClient(httpClient =>

@@ -14,16 +14,16 @@ public class LocalStorageService : ILocalStorageService
 
     public async Task SetItem(string key, string value)
     {
-        await _jSRuntime.InvokeVoidAsync("localStorage.setItem", key, value);
+        await _jSRuntime.InvokeVoidAsync("localStorageInterop.setItem", key, value);
     }
 
-    public async Task<string> GetItem(string key)
+    public async Task<string?> GetItem(string key)
     {
-        return await _jSRuntime.InvokeAsync<string>("localStorage.getItem", key);
+        return await _jSRuntime.InvokeAsync<string?>("localStorageInterop.getItem", key);
     }
 
     public async Task RemoveItem(string key)
     {
-        await _jSRuntime.InvokeVoidAsync("localStorage.removeItem", key);
+        await _jSRuntime.InvokeVoidAsync("localStorageInterop.removeItem", key);
     }
 }
