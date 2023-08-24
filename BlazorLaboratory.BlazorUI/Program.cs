@@ -10,7 +10,10 @@ using System.Net.Http.Headers;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-var appConfig = builder.Configuration;
+var apiUri = builder.Configuration.GetValue<string>("ApiUri");
+var graphUri = builder.Configuration.GetValue<string>("GraphUri");
+var graphWebSocketUri = builder.Configuration.GetValue<string>("GraphWebSocketUri");
+
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
@@ -18,20 +21,23 @@ builder.Services.AddSingleton<FirebaseToken>();
 builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
 builder.Services.AddMudServices();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddTransient<HttpRequestHandler>();
+
 builder.Services.AddGraphClient()
     .ConfigureHttpClient((services, client) =>
     {
         FirebaseToken token = services.GetRequiredService<FirebaseToken>();
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Value);
-        client.BaseAddress = new Uri(appConfig["GraphUri"]!);
+        client.BaseAddress = new Uri(graphUri);
     })
-    .ConfigureWebSocketClient(client => client.Uri = new Uri(appConfig["GraphWebSocketUri"]!));
-builder.Services.AddRefitClient<IUserClient>().ConfigureHttpClient(httpClient =>
-{
-    httpClient.BaseAddress = new Uri(appConfig["ApiUri"]!);
-    httpClient.AddDefaultSecurityHeaders();
-});
+    .ConfigureWebSocketClient(client => client.Uri = new Uri(graphWebSocketUri));
+
+builder.Services.AddRefitClient<IUserClient>()
+    .ConfigureHttpClient(httpClient =>
+    {
+        httpClient.BaseAddress = new Uri(apiUri);
+        httpClient.AddDefaultSecurityHeaders();
+    }).AddHttpMessageHandler<HttpRequestHandler>(); ;
 
 
 await builder.Build().RunAsync();
