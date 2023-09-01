@@ -20,6 +20,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddSingleton<FirebaseToken>();
 builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddScoped<IHttp, Http>();
 builder.Services.AddMudServices();
 builder.Services.AddTransient<HttpRequestHandler>();
 
@@ -37,7 +38,7 @@ builder.Services.AddRefitClient<IUserClient>()
     {
         httpClient.BaseAddress = new Uri(apiUri);
         httpClient.AddDefaultSecurityHeaders();
-    }).AddHttpMessageHandler<HttpRequestHandler>(); ;
+    }).AddHttpMessageHandler<HttpRequestHandler>();
 
 
 await builder.Build().RunAsync();

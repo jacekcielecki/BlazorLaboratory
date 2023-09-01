@@ -7,14 +7,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <GraphQL Remove="GraphQL\Mutations\DeleteCourse.graphql" />
-	  <GraphQL Remove="GraphQL\Mutations\UpdateCourse.graphql" />
 	  <GraphQL Remove="GraphQL\Queries\CreateCourse.graphql" />
-	  <GraphQL Remove="GraphQL\Queries\GetInstructors.graphql" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="GraphQL\Mutations\DeleteCourse.graphql" />
+	  <None Remove="GraphQL\Mutations\UpdateCourse.graphql" />
 	  <None Remove="GraphQL\Queries\GetCourseById.graphql" />
+	  <None Remove="GraphQL\Queries\GetInstructors.graphql" />
 	  <None Remove="GraphQL\Subscriptions\CourseCreated.graphql" />
 	  <None Remove="GraphQL\Subscriptions\CourseUpdated.graphql" />
 	</ItemGroup>
