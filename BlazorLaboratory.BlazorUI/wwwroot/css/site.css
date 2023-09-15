@@ -89,3 +89,8 @@
 #double-button-right .mud-button-root {
     border-radius: 0 80px 80px 0;
 }
+
+#map {
+    height: 360px;
+}
+

@@ -1,0 +1,19 @@
+﻿@page "/leaflet"
+@inject IJSRuntime JsRuntime
+
+<h3>Leaflet</h3>
+
+<div id="map"></div>
+
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRuntime.InvokeVoidAsync("blazorExtensions.initMap");
+            StateHasChanged();
+        }
+    }
+}
