@@ -266,10 +266,12 @@
 
 @code
 {
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        JsRuntime.InvokeVoidAsync("addEvents");
-
-        return base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            await JsRuntime.InvokeVoidAsync("svgMap.init");
+            StateHasChanged();
+        }
     }
 }
