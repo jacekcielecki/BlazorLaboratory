@@ -2,11 +2,19 @@
 @inject IJSRuntime JsRuntime
 
 <h3>Leaflet</h3>
+<MudButton @onclick="AddMarker" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">Add Marker</MudButton>
 
 <div id="map"></div>
 
 
 @code {
+
+    private async Task AddMarker()
+    {
+        double lon = 52.489660;
+        double lat = 16.941609;
+        await JsRuntime.InvokeVoidAsync("blazorExtensions.addMarker", lon, lat);
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
