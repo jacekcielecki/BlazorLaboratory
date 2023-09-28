@@ -1,10 +1,12 @@
-﻿@page "/fetchdata"
+﻿@page "/DataFromFile"
+@using Newtonsoft.Json
 @inject HttpClient Http
 
 <PageTitle>Weather forecast</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
-<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
+<MudText Class="mb-8">This component demonstrates fetching data from json file.</MudText>
+
 @if (forecasts == null)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
@@ -34,10 +36,12 @@ else
 @code {
     private WeatherForecast[]? forecasts;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        string json = File.ReadAllText("sample-data/weather.json");
+        forecasts = JsonConvert.DeserializeObject<WeatherForecast[]>(json);
     }
+
     public class WeatherForecast
     {
         public DateTime Date { get; set; }

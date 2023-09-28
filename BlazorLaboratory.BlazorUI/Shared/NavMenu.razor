@@ -1,16 +1,23 @@
 ﻿<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
-    <MudNavLink Href="fetchdata" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Fetch data</MudNavLink>
-    <MudNavLink Href="svg-map" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Map">Map of Hawaii</MudNavLink>
-    <MudNavLink Href="columns" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ViewColumn">Columns</MudNavLink>
-    <MudNavLink Href="individualTools" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Toys">Individual Tools</MudNavLink>
-    <MudNavLink Href="dapper" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dangerous">DapperTest</MudNavLink>
-    <MudNavLink Href="position-relative" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Abc">PositionRelative</MudNavLink>
-    <MudNavLink Href="signalR" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SignalWifi4Bar">SignalR</MudNavLink>
-    <MudNavLink Href="ExpansionTable" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Expand">ExpansionTable</MudNavLink>
-    <MudNavLink Href="Empty" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EmojiPeople">No Layout</MudNavLink>
-    <MudNavLink Href="cookies" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Cookie">Cookies</MudNavLink>
-    <MudNavLink Href="graphql" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AutoGraph">GraphQL</MudNavLink>
-    <MudNavLink Href="leaflet" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ZoomInMap">Leaflet</MudNavLink>
+    <MudNavGroup Title="CSS" Icon="@Icons.Material.Filled.Brush" Expanded="false">
+        <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+        <MudNavLink Href="columns" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ViewColumn">Item alignment</MudNavLink>
+        <MudNavLink Href="individualTools" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Toys">Individual Tools</MudNavLink>
+        <MudNavLink Href="position-relative" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Abc">PositionRelative</MudNavLink>
+        <MudNavLink Href="ExpansionTable" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Expand">ExpansionTable</MudNavLink>
+        <MudNavLink Href="Empty" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Layers">No Layout</MudNavLink>
+    </MudNavGroup>    
+    <MudNavGroup Title="Data Source" Icon="@Icons.Material.Filled.DataObject" Expanded="false">
+        <MudNavLink Href="DataFromFile" Match="NavLinkMatch.Prefix" Icon="@Icons.Custom.FileFormats.FileCode">Json file</MudNavLink>
+        <MudNavLink Href="cookies" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Cookie">Cookies</MudNavLink>
+        <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Web Sockets</MudNavLink>
+        <MudNavLink Href="signalR" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SignalWifi4Bar">SignalR</MudNavLink>
+        <MudNavLink Href="dapper" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dangerous">Rest API</MudNavLink>
+        <MudNavLink Href="graphql" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AutoGraph">GraphQL API</MudNavLink>
+    </MudNavGroup>
+    <MudNavGroup Title="Map" Icon="@Icons.Material.Filled.Map" Expanded="false">
+        <MudNavLink Href="svg-map" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BeachAccess">SVG Map</MudNavLink>
+        <MudNavLink Href="leaflet" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Streetview">Open Street Map</MudNavLink>
+        <MudNavLink Href="googlemaps" Match="NavLinkMatch.All" Icon="@Icons.Custom.Brands.Google">Google Maps</MudNavLink>
+    </MudNavGroup>
 </MudNavMenu>
