@@ -94,3 +94,8 @@
     height: 360px;
 }
 
+#googleMap {
+    height: 500px;
+    width: 1000px;
+    background: #1861ac;
+}
