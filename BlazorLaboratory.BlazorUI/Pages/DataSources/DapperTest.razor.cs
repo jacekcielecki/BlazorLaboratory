@@ -3,7 +3,7 @@ using BlazorLaboratory.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace BlazorLaboratory.BlazorUI.Pages;
+namespace BlazorLaboratory.BlazorUI.Pages.DataSources;
 
 public partial class DapperTest
 {

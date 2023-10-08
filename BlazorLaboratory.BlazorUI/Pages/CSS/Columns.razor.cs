@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace BlazorLaboratory.BlazorUI.Pages;
+namespace BlazorLaboratory.BlazorUI.Pages.CSS;
 
 public partial class Columns
 {

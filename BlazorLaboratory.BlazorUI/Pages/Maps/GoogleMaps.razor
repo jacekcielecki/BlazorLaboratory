@@ -1,0 +1,8 @@
+﻿@page "/GoogleMaps"
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+
+<h3>GoogleMaps</h3>
+<MudButton @onclick="ShowMarkers" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">Add Marker</MudButton>
+
+<div id="googleMap"></div>
