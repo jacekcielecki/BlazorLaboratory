@@ -5,6 +5,8 @@ namespace BlazorLaboratory.BlazorUI.Pages.Maps;
 
 public partial class GoogleMaps
 {
+    private string _inputAddress;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -13,9 +15,20 @@ public partial class GoogleMaps
         }
     }
 
-    private void ShowMarkers()
+    private async Task ShowMarker(string location)
     {
-        Snackbar.Add("This is working!", Severity.Success);
+        await JsRuntime.InvokeVoidAsync("googleMaps.addMarker", location);
+    }
+
+    private async Task LoadDefaultMarkers()
+    {
+        await JsRuntime.InvokeVoidAsync("googleMaps.loadDefaultMarker");
+    }
+
+    private async Task GeoCodeAddress()
+    {
+        var location = await JsRuntime.InvokeAsync<string>("googleMaps.geocodeAddress", _inputAddress);
+        Snackbar.Add(location, Severity.Success);
     }
 }
 

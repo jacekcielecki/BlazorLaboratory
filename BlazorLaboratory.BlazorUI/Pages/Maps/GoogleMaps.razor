@@ -3,6 +3,10 @@
 @inject ISnackbar Snackbar
 
 <h3>GoogleMaps</h3>
-<MudButton @onclick="ShowMarkers" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">Add Marker</MudButton>
+<MudButton @onclick="LoadDefaultMarkers" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">Add Marker</MudButton>
+<br/>
+<br />
+<MudInput Variant="Variant.Outlined" @bind-Value="@_inputAddress" Placeholder="Provide a valid address" />
+<MudButton @onclick="GeoCodeAddress" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">get localization</MudButton>
 
-<div id="googleMap"></div>
+<div id="map"></div>

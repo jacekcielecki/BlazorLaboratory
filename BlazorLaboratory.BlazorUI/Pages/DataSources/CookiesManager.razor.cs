@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace BlazorLaboratory.BlazorUI.Pages;
+namespace BlazorLaboratory.BlazorUI.Pages.DataSources;
 
 public partial class CookiesManager
 {
