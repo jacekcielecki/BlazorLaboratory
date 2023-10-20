@@ -1,4 +1,4 @@
-﻿@page "/BlazorInputFile"
+﻿@page "/BlazorInput"
 @using BlazorInputFile
 
 <h1>Drag/drop file viewer</h1>
@@ -6,8 +6,30 @@
 <p>Shows how you can present a custom UI instead of the native file input.</p>
 
 <div class="drag-drop-zone">
+    <MudGrid Spacing="0">
+        <MudItem xs="12">
+            <h5 class="d-flex justify-center" style="font-weight: 500">Here you can upload your documents</h5>
+        </MudItem>
+        <MudItem xs="12">
+            <div class="d-flex justify-center" style="font-weight: 400; color: #696969">Drag or drop files here.</div>
+        </MudItem>
+        <MudItem xs="12">
+            <div class="d-flex justify-center mt-3">
+                @if (_uploadingFiles)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.UploadFile" Size="Size.Large"></MudIcon>
+                }
+            </div>
+        </MudItem>
+        <MudItem xs="12" class="d-flex justify-center">
+                @status
+        </MudItem>
+    </MudGrid>
     <BlazorInputFile.InputFile OnChange="ViewFile"/>
-    @status
 </div>
 
 @if (fileName != null)
@@ -20,12 +42,16 @@
     const string DefaultStatus = "Drop a text file here to view it, or click to choose a file";
     const int MaxFileSize = 5 * 1024 * 1024; // 5MB
     string status = DefaultStatus;
+    private bool _uploadingFiles;
 
     string fileName;
     string fileTextContents;
 
     async Task ViewFile(IFileListEntry[] files)
     {
+        _uploadingFiles = true;
+        StateHasChanged();
+        Thread.Sleep(2000);
         var file = files.FirstOrDefault();
         if (file == null)
         {
@@ -47,5 +73,7 @@
 
             status = DefaultStatus;
         }
+
+        _uploadingFiles = false;
     }
 }
