@@ -3,9 +3,8 @@
 @implements IAsyncDisposable
 
 <div @ref="fileDropContainer" class="file-drop-zone @HoverClass" @ondragenter="OnDragEnter" @ondragleave="OnDragLeave" @ondragover="OnDragEnter">
-@*     <InputFile OnChange="@OnChange" @ref="inputFile" multiple id="file-upload" class="custom-file-input" type="file" />
- *@    <input type="file" id="selectedFile" style="display: none;" />
-    <input type="button" value="Browse..." onclick="document.getElementById('selectedFile').click();" />
+<InputFile OnChange="@OnChange" @ref="inputFile" multiple id="file-upload" class="custom-file-input" type="file" />
+
 </div>
 
 <div class="error-message-container">
