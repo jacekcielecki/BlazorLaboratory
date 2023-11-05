@@ -6,6 +6,7 @@
     <form class="form-check-inline">
         <div class="d-flex">
             <select class="form-control mr-2 mr" @bind="selectedCulture">
+                <option>Select...</option>
                 @foreach (var culture in _cultures)
                 {
                     <option value="@culture.Key">@culture.Value</option>
