@@ -1,8 +1,8 @@
-﻿using BlazorLaboratory.DataAccess.Models;
+﻿using BlazorLaboratory.Shared.DTOs;
 
 namespace BlazorLaboratory.BlazorUI.Services.Interfaces;
 
 public interface IOpenStreetMapService
 {
-    public Task<OSMGetCoordinatesResponse?> GetCoordinates(string country, string city, string street);
+    public Task<CoordinatesDto?> GetCoordinates(string country, string city, string street);
 }

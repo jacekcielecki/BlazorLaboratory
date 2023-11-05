@@ -1,12 +1,12 @@
 ﻿using BlazorLaboratory.BlazorUI.Services.Interfaces;
-using BlazorLaboratory.DataAccess.Models;
+using BlazorLaboratory.Shared.DTOs;
 using Newtonsoft.Json;
 
 namespace BlazorLaboratory.BlazorUI.Services.Classes;
 
 public class OpenStreetMapService : IOpenStreetMapService
 {
-    public async Task<OSMGetCoordinatesResponse?> GetCoordinates(string country, string city, string street)
+    public async Task<CoordinatesDto?> GetCoordinates(string country, string city, string street)
     {
         var address = $"{country} {city} {street}";
         var httpClient = new HttpClient();
@@ -17,7 +17,7 @@ public class OpenStreetMapService : IOpenStreetMapService
 
         if (response.IsSuccessStatusCode && !string.IsNullOrEmpty(responseAsString))
         {
-            var deserializedResponseObjects = JsonConvert.DeserializeObject<IEnumerable<OSMGetCoordinatesResponse>>(responseAsString);
+            var deserializedResponseObjects = JsonConvert.DeserializeObject<IEnumerable<CoordinatesDto>>(responseAsString);
             return deserializedResponseObjects?.First();
         }
 

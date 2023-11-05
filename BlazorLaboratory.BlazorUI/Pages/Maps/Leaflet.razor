@@ -1,6 +1,6 @@
 ﻿@page "/leaflet"
 @using BlazorLaboratory.BlazorUI.Services.Interfaces
-@using BlazorLaboratory.DataAccess.Models
+@using BlazorLaboratory.Shared.DTOs
 @inject IJSRuntime JsRuntime
 @inject IOpenStreetMapService StreetMapService
 
@@ -11,14 +11,29 @@
 
 
 @code {
-    private readonly List<OSMGetCoordinatesResponse> _existingProjectCoordinates = new();
+    private readonly List<CoordinatesDto> _existingProjectCoordinates = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var project1 = await StreetMapService.GetCoordinates("Poland", "Warszawa", "Marszałkowska");
-        var project2 = await StreetMapService.GetCoordinates("Poland", "Poznań", "Święty Marcin");
-        _existingProjectCoordinates.Add(project1!);
-        _existingProjectCoordinates.Add(project2!);
+        var project1Coordinates = await StreetMapService.GetCoordinates("Poland", "Warszawa", "Marszałkowska");
+        if (project1Coordinates != null)
+        {
+            _existingProjectCoordinates.Add(project1Coordinates);
+        }
+        var project2Coordinates = await StreetMapService.GetCoordinates("Poland", "Poznań", "Święty Marcin");
+        if (project2Coordinates != null)
+        {
+            _existingProjectCoordinates.Add(project2Coordinates);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRuntime.InvokeVoidAsync("blazorExtensions.initMap");
+            StateHasChanged();
+        }
     }
 
     private async Task ShowMarkers()
@@ -34,15 +49,6 @@
         if (_existingProjectCoordinates.Count != 0)
         {
             await JsRuntime.InvokeVoidAsync("blazorExtensions.addMarker", lat, lon);
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JsRuntime.InvokeVoidAsync("blazorExtensions.initMap");
-            StateHasChanged();
         }
     }
 }
