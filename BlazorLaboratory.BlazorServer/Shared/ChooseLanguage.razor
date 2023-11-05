@@ -1,0 +1,47 @@
+﻿@inject NavigationManager NavigationManager
+@inject IConfiguration Configuration
+
+@if (_cultures != null)
+{
+    <form class="form-check-inline">
+        <div class="d-flex">
+            <select class="form-control mr-2 mr" @bind="selectedCulture">
+                @foreach (var culture in _cultures)
+                {
+                    <option value="@culture.Key">@culture.Value</option>
+                }
+            </select>
+            <button class="btn btn-outline-primary" @onclick="RequestCultureChange">Change</button>
+        </div>
+    </form>
+
+}
+
+@code
+{
+    private string selectedCulture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    private Dictionary<string, string>? _cultures;
+
+    protected override void OnInitialized()
+    {
+        _cultures = Configuration
+            .GetSection("Cultures")
+            .GetChildren()
+            .ToDictionary(x => x.Key, x => x.Value)!;
+    }
+
+    private void RequestCultureChange()
+    {
+        if (string.IsNullOrWhiteSpace(selectedCulture))
+        {
+            return;
+        }
+
+        var currentUri = new Uri(NavigationManager.Uri)
+            .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped); //uniform resource identifier
+
+        var query = $"?culture={Uri.EscapeDataString(selectedCulture)}&redirectUrl={Uri.EscapeDataString(currentUri)}";
+
+        NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);
+    }
+}

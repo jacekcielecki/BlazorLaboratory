@@ -7,16 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Resources\App.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="Hangfire" Version="1.8.2" />
     <PackageReference Include="Hangfire.Core" Version="1.8.2" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.2" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.13" />
     <PackageReference Include="MudBlazor" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorLaboratory.Shared\BlazorLaboratory.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Resource Include="Resources\App.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

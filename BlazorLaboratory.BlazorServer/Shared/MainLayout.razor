@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.Extensions.Localization
+@inherits LayoutComponentBase
+@inject IStringLocalizer<App> Localizer
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -11,6 +14,9 @@
 
     <main>
         <div class="top-row px-4">
+            <b class="mr-3">@Localizer["Blazor Laboratory"]</b>
+            <span class="mr-2">Language</span>
+            <ChooseLanguage/>
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 
