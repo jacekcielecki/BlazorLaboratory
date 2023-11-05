@@ -1,10 +1,6 @@
 let map; // Map reference
 
 window.googleMaps = {
-    createAlert: function () {
-        alert("Js interop test");
-    },
-
     initMap: async function ()
     {
         const { Map } = await google.maps.importLibrary("maps");
@@ -16,7 +12,7 @@ window.googleMaps = {
         });
     },
 
-    loadDefaultMarker: async function () {
+    loadDefaultMarkers: async function () {
         const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
         // The marker, positioned at Poznañ
@@ -38,16 +34,16 @@ window.googleMaps = {
         });
     },
 
-    geocodeAddress: function (address) {
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ address: address }, function (results, status) {
-            if (status === "OK" && results[0]) {
-                const location = results[0].geometry.location;
-                console.log(location);
-                return location;
-            } else {
-                console.error("Geocode was not successful for the following reason: " + status);
-            }
+
+    addMarker: async function (lat, lng, name) {
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+        const position = { lat: lat, lng: lng };
+
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: position,
+            title: name,
         });
-    }
+    },
 }
