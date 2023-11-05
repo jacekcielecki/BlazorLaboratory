@@ -8,7 +8,8 @@ window.googleMaps = {
         map = new Map(document.getElementById("map"), {
             center: { lat: 52.460203, lng: 16.935870 },
             zoom: 4,
-            mapId: 'f2d80162ef610a83'
+            mapId: 'f2d80162ef610a83',
+            disableDefaultUI: true,
         });
     },
 
