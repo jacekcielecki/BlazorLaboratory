@@ -1,0 +1,35 @@
+﻿@page "/video"
+@inject ISnackbar Snackbar
+
+<h3>Video</h3>
+
+<div style="background: black; position: relative;">
+    <BlazoredVideo EndedEvent="VideoEndedEvent" class="w-100"autoplay="autoplay"style="width: 853px; height: 380px;"> 
+        <source src="video/Multimedia2.mp4" type="video/mp4"/>
+    </BlazoredVideo>
+    
+    @if (_videoEnded)
+    {
+        <div style="position: absolute; right: 20%; top: 20%;">
+            <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Icon="@Icons.Material.Filled.Info" Elevation="0" Class="my-2" Style="background: #0052FF;">
+                <div style="font-size: .8rem; font-weight: 400">
+                    Click here to go to the module 1.
+                </div>
+            </MudAlert>
+        </div>
+
+        <div style="position: absolute; left: 35%; top: 70%;">
+            <MudAlert Severity="Severity.Success" Variant="Variant.Filled" Icon="@Icons.Material.Filled.Info" Elevation="0" Class="my-2" Style="background: green;">
+                <div style="font-size: .8rem; font-weight: 400">
+                    Click here to go to the module 2.
+                </div>
+            </MudAlert>
+        </div>
+    }
+</div>
+
+@code {
+    private bool _videoEnded;
+
+    private void VideoEndedEvent() => _videoEnded = true;
+}
