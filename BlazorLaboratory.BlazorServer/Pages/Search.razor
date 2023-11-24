@@ -1,0 +1,15 @@
+﻿@page "/search"
+
+<h3>Search</h3>
+
+<BlazoredTypeahead SearchMethod="@SearchProducts" @bind-Value="@_selectedProduct"Debounce="500">
+    <SelectedTemplate>
+        @context.Name
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context.Name (@context.Code)
+    </ResultTemplate>
+    <NotFoundTemplate>
+        Sorry, there weren't any search results.
+    </NotFoundTemplate>
+</BlazoredTypeahead>
