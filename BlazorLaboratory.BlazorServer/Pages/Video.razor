@@ -4,8 +4,8 @@
 <h3>Video</h3>
 
 <div style="background: black; position: relative;">
-    <BlazoredVideo EndedEvent="VideoEndedEvent" class="w-100"autoplay="autoplay"style="width: 853px; height: 380px;"> 
-        <source src="video/Multimedia2.mp4" type="video/mp4"/>
+    <BlazoredVideo @ref="_video" VideoEventOptions="_videoOptions" EndedEvent="VideoEndedEvent" class="w-100" autoplay="autoplay" muted="muted" style="width: 853px; height: 380px;">
+        <source src="video/Multimedia1.mp4" type="video/mp4"/>
     </BlazoredVideo>
     
     @if (_videoEnded)
@@ -27,9 +27,48 @@
         </div>
     }
 </div>
+<div class="d-flex">
+    <MudButton @onclick="@(async () => await PlayOrPause(_video))" Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.PlayArrow" Class="mt-4">Play</MudButton>
+    <MudButton @onclick="@(async () => await MuteOrUnMute(_video))" Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.VolumeMute" Class="mt-4 ml-4">Mute</MudButton>
+</div>
 
 @code {
+    private readonly Dictionary<VideoEvents, VideoStateOptions> _videoOptions = new();
     private bool _videoEnded;
+    private BlazoredVideo _video = new();
 
     private void VideoEndedEvent() => _videoEnded = true;
+
+    protected override void OnInitialized()
+    {
+        var pausedOption = new VideoStateOptions { Paused = true, Muted = true, DefaultMuted = true, Volume = false };
+        _videoOptions[VideoEvents.CanPlay] = pausedOption;
+        _videoOptions[VideoEvents.Ended] = pausedOption;
+        _videoOptions[VideoEvents.Pause] = pausedOption;
+        _videoOptions[VideoEvents.Play] = pausedOption;
+    }
+
+    private async Task PlayOrPause(BlazoredVideo video)
+    {
+        if (await video.GetPausedAsync())
+        {
+            await video.StartPlayback();
+        }
+        else
+        {
+            await video.PausePlayback();
+        }
+    }
+
+    private async Task MuteOrUnMute(BlazoredVideo video)
+    {
+        if (!(await video.GetMutedAsync()))
+        {
+            await video.SetMutedAsync(true);
+        }
+        else
+        {
+            await video.SetMutedAsync(false);
+        }
+    }
 }
