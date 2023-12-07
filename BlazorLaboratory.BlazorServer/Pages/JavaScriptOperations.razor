@@ -1,26 +1,29 @@
 ﻿@page "/js"
 @inject IJSRuntime JsRuntime
-@inject ISnackbar Snackbar
 
 <h3>JavaScriptOperations</h3>
+<br/>
+<h4>Result: @OperationResult</h4>
 
 <div class="d-flex">
     <MudIconButton @onclick="ShowAlert" Variant="Variant.Filled" Color="Color.Info" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4"></MudIconButton>
-    <MudIconButton @onclick="ShowSnackbarFromJs" Variant="Variant.Filled" Color="Color.Error" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4 ml-3"></MudIconButton>
+    <MudIconButton @onclick="CallJsFunc" Variant="Variant.Filled" Color="Color.Error" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4 ml-3"></MudIconButton>
 </div>
 
 
 @code {
-    [JSInvokable("BlazorLaboratory.BlazorServer")]
-    public void ShowSnackbar()
+    public static string OperationResult { get; set; } = "---";
+
+    [JSInvokable]
+    public static async Task CallCSharpFunc()
     {
-        Snackbar.Add("Success", Severity.Success);
+        OperationResult = "Super success!";
+        await Task.CompletedTask;
     }
 
-    async Task ShowSnackbarFromJs()
-    {
-        await JsRuntime.InvokeVoidAsyncIgnoreErrors("showSnack");
-    }
+    private async Task CallJsFunc() =>
+        await JsRuntime.InvokeVoidAsyncIgnoreErrors("updateResult");
 
-    async Task ShowAlert() => await JsRuntime.InvokeVoidAsyncIgnoreErrors("showAlert");
+    private async Task ShowAlert() => 
+        await JsRuntime.InvokeVoidAsyncIgnoreErrors("showAlert");
 }
