@@ -1,0 +1,26 @@
+﻿@page "/js"
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+
+<h3>JavaScriptOperations</h3>
+
+<div class="d-flex">
+    <MudIconButton @onclick="ShowAlert" Variant="Variant.Filled" Color="Color.Info" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4"></MudIconButton>
+    <MudIconButton @onclick="ShowSnackbarFromJs" Variant="Variant.Filled" Color="Color.Error" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4 ml-3"></MudIconButton>
+</div>
+
+
+@code {
+    [JSInvokable("BlazorLaboratory.BlazorServer")]
+    public void ShowSnackbar()
+    {
+        Snackbar.Add("Success", Severity.Success);
+    }
+
+    async Task ShowSnackbarFromJs()
+    {
+        await JsRuntime.InvokeVoidAsyncIgnoreErrors("showSnack");
+    }
+
+    async Task ShowAlert() => await JsRuntime.InvokeVoidAsyncIgnoreErrors("showAlert");
+}
