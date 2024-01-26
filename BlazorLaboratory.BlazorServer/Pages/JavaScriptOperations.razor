@@ -1,5 +1,6 @@
 ﻿@page "/js"
 @inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
 
 <h3>JavaScriptOperations</h3>
 <br/>
@@ -8,11 +9,17 @@
 <div class="d-flex">
     <MudIconButton @onclick="ShowAlert" Variant="Variant.Filled" Color="Color.Info" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4"></MudIconButton>
     <MudIconButton @onclick="CallJsFunc" Variant="Variant.Filled" Color="Color.Error" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4 ml-3"></MudIconButton>
+    <MudIconButton @onclick="CallShowSnack" Variant="Variant.Filled" Color="Color.Dark" Icon="@Icons.Material.Filled.PlayArrow" Class="mt-4 ml-3"></MudIconButton>
 </div>
 
 
 @code {
     public static string OperationResult { get; set; } = "---";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await InitDotNetObjectReference();
+    }
 
     [JSInvokable]
     public static async Task CallCSharpFunc()
@@ -21,9 +28,22 @@
         await Task.CompletedTask;
     }
 
+    [JSInvokable]
+    public void ShowSnackBar(string text)
+    {
+        Snackbar.Add(text, Severity.Info);
+        StateHasChanged();
+    }
+
+    private async Task CallShowSnack() =>
+        await JsRuntime.InvokeVoidAsyncIgnoreErrors("jsFunctions.showSnackbar", "This is working too");
+
     private async Task CallJsFunc() =>
         await JsRuntime.InvokeVoidAsyncIgnoreErrors("updateResult");
 
     private async Task ShowAlert() => 
         await JsRuntime.InvokeVoidAsyncIgnoreErrors("showAlert");
+
+    private async Task InitDotNetObjectReference() =>
+        await JsRuntime.InvokeVoidAsyncIgnoreErrors("jsFunctions.initDotNetObjectReference", DotNetObjectReference.Create(this));
 }
