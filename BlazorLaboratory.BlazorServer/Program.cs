@@ -1,7 +1,6 @@
-using BlazorLaboratory.BlazorServer;
+using BlazorLaboratory.BlazorServer.Circuit;
 using BlazorLaboratory.BlazorServer.Data;
 using BlazorLaboratory.BlazorServer.Hubs;
-using Hangfire;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.ResponseCompression;
 using MudBlazor.Services;
@@ -11,7 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<CircuitHandler, CircuitHandlerService>();
+
+builder.Services.AddSingleton<ICircuitUserService, CircuitUserService>();
+builder.Services.AddScoped<CircuitHandler>(sp => new CircuitHandlerService(sp.GetRequiredService<ICircuitUserService>()));
+
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
 builder.Services.AddControllers();
