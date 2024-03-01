@@ -6,7 +6,7 @@ namespace BlazorLaboratory.BlazorServer.Pages;
 public partial class CircuitMonitoring : ComponentBase, IDisposable
 {
     public string MyCircuitMessage = "";
-    public string MyUserId = "";
+    public string UserName = "";
 
     private CircuitHandlerService _handler;
 
@@ -15,15 +15,16 @@ public partial class CircuitMonitoring : ComponentBase, IDisposable
         _handler = (CircuitHandlerService)CircuitHandler;
         MyCircuitMessage = $"My Circuit ID = {_handler.CircuitId}";
 
-        MyUserId = CircuitUserService.Circuits.Count switch
+        UserName = CircuitUserService.Circuits.Count switch
         {
             0 => "John",
             1 => "Kelly",
-            >= 2 => "Alan",
-            _ => MyUserId
+            2 => "Alan",
+            3 => "Luke",
+            _ => "Some other user"
         };
 
-        CircuitUserService.Connect(_handler.CircuitId, MyUserId);
+        CircuitUserService.Connect(_handler.CircuitId, UserName);
         CircuitUserService.CircuitsChanged += CircuitUserService_CircuitsChanged;
     }
 

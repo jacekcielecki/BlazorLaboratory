@@ -9,17 +9,17 @@ public class CircuitUserService : ICircuitUserService
 
     void OnCircuitsChanged() => CircuitsChanged?.Invoke(this, EventArgs.Empty);
 
-    public void Connect(string circuitId, string userId)
+    public void Connect(string circuitId, string userName)
     {
         if (Circuits.ContainsKey(circuitId))
         {
-            Circuits[circuitId].UserId = userId;
+            Circuits[circuitId].UserName = userName;
         }
         else
         {
             var circuitUser = new CircuitUser
             {
-                UserId = userId,
+                UserName = userName,
                 CircuitId = circuitId,
             };
             Circuits[circuitId] = circuitUser;
