@@ -1,0 +1,16 @@
+﻿@page "/CircuitMonitoring"
+@using BlazorLaboratory.BlazorServer.Circuit
+@using Microsoft.AspNetCore.Components.Server.Circuits
+@inject ICircuitUserService CircuitUserService
+@inject CircuitHandler CircuitHandler
+
+<h3>CircuitMonitoring</h3>
+
+<h1>@UserName</h1>
+
+<div>@MyCircuitMessage</div>
+<div>There are @CircuitUserService.Circuits.Count Users Connected</div>
+
+@code {
+
+}

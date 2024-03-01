@@ -20,6 +20,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddSingleton<FirebaseToken>();
 builder.Services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddScoped<IOpenStreetMapService, OpenStreetMapService>();
+builder.Services.AddScoped<IGeocodingService, GoogleGeocodingService>();
 builder.Services.AddScoped<IHttp, Http>();
 builder.Services.AddMudServices();
 builder.Services.AddTransient<HttpRequestHandler>();

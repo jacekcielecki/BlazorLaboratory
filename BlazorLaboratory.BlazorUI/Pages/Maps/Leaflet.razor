@@ -1,0 +1,54 @@
+﻿@page "/leaflet"
+@using BlazorLaboratory.BlazorUI.Services.Interfaces
+@using BlazorLaboratory.Shared.DTOs
+@inject IJSRuntime JsRuntime
+@inject IOpenStreetMapService StreetMapService
+
+<h3>Leaflet</h3>
+<MudButton @onclick="ShowMarkers" StartIcon="@Icons.Filled.Add" Class="my-3" Variant="Variant.Outlined">Add Marker</MudButton>
+
+<div id="map"></div>
+
+
+@code {
+    private readonly List<CoordinatesDto> _existingProjectCoordinates = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var project1Coordinates = await StreetMapService.GetCoordinates("Poland", "Warszawa", "Marszałkowska");
+        if (project1Coordinates != null)
+        {
+            _existingProjectCoordinates.Add(project1Coordinates);
+        }
+        var project2Coordinates = await StreetMapService.GetCoordinates("Poland", "Poznań", "Święty Marcin");
+        if (project2Coordinates != null)
+        {
+            _existingProjectCoordinates.Add(project2Coordinates);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRuntime.InvokeVoidAsync("blazorExtensions.initMap");
+            StateHasChanged();
+        }
+    }
+
+    private async Task ShowMarkers()
+    {
+        foreach (var coordinates in _existingProjectCoordinates)
+        {
+            await AddMarker(coordinates.Lat, coordinates.Lon);
+        }
+    }
+
+    private async Task AddMarker(string lat, string lon)
+    {
+        if (_existingProjectCoordinates.Count != 0)
+        {
+            await JsRuntime.InvokeVoidAsync("blazorExtensions.addMarker", lat, lon);
+        }
+    }
+}

@@ -1,0 +1,71 @@
+﻿@page "/ExpansionTable"
+@using BlazorLaboratory.Shared.DTOs
+
+<MudButtonGroup Color="Color.Dark" Variant="Variant.Outlined" Size="Size.Small">
+    <MudButton id="double-button-left">
+        <MudIcon Icon="@Icons.Material.Filled.Add" Size="Size.Small" />&nbsp; Add</MudButton>
+    <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" id="double-button-right" AnchorOrigin="Origin.BottomLeft">
+        <MudMenuItem>User</MudMenuItem>
+        <MudMenuItem>Group</MudMenuItem>
+    </MudMenu>
+</MudButtonGroup>
+
+<MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
+          Items="@Elements"
+          GroupBy="@_groupDefinition"
+          GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
+          GroupFooterClass="mb-4"
+          Dense="true">
+    <ColGroup>
+        <col style="width: 60px;" />
+        <col />
+        <col />
+        <col />
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>Email</MudTh>
+        <MudTh>Division</MudTh>
+        <MudTh>Country</MudTh>
+        <MudTh>Level</MudTh>
+        <MudTh>Role</MudTh>
+    </HeaderContent>
+    <GroupHeaderTemplate>
+        <MudTh Class="mud-table-cell-custom-group" colspan="1">@context.Items.FirstOrDefault()?.Email</MudTh>
+        <MudTh Class="mud-table-cell-custom-group" colspan="1">(x)</MudTh>
+        <MudTh Class="mud-table-cell-custom-group" colspan="1">(y)</MudTh>
+        <MudTh Class="mud-table-cell-custom-group" colspan="1"></MudTh>
+        <MudTh Class="mud-table-cell-custom-group" colspan="1"></MudTh>
+    </GroupHeaderTemplate>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Email</MudTd>
+        <MudTd DataLabel="Sign">@context.Division</MudTd>
+        <MudTd DataLabel="Name">@context.Country</MudTd>
+        <MudTd DataLabel="Position">@context.Level</MudTd>
+        <MudTd DataLabel="Position">@context.Role</MudTd>
+    </RowTemplate>
+</MudTable>
+@code {
+
+    private TableGroupDefinition<UserAccessDto> _groupDefinition = new()
+        {
+            GroupName = "Group",
+            Indentation = false,
+            Expandable = true,
+            IsInitiallyExpanded = false,
+            Selector = (e) => e.Email
+        };
+
+    private IEnumerable<UserAccessDto> Elements = new List<UserAccessDto>
+    {
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser1@mail.com", Level = "L1", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser1@mail.com", Level = "L2", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser1@mail.com", Level = "L3", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser1@mail.com", Level = "L4", Role = "Admin"},
+
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L1", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L2", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L3", Role = "Admin"},
+        new UserAccessDto{ Country = "PL", Division = "ELSD", Email = "testuser2@mail.com", Level = "L4", Role = "Admin"},
+    };
+}

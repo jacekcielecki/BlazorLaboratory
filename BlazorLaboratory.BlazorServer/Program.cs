@@ -1,6 +1,7 @@
+using BlazorLaboratory.BlazorServer.Circuit;
 using BlazorLaboratory.BlazorServer.Data;
 using BlazorLaboratory.BlazorServer.Hubs;
-using Hangfire;
+using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.ResponseCompression;
 using MudBlazor.Services;
 
@@ -9,8 +10,30 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddSingleton<ICircuitUserService, CircuitUserService>();
+builder.Services.AddScoped<CircuitHandler>(sp => new CircuitHandlerService(sp.GetRequiredService<ICircuitUserService>()));
+
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
+builder.Services.AddControllers();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+RequestLocalizationOptions GetLocalizationOptions()
+{
+    var cultures = builder?.Configuration
+        .GetSection("Cultures")
+        .GetChildren()
+        .ToDictionary(x => x.Key, x => x.Value);
+
+    var supportedCultures = cultures?.Keys.ToArray();
+
+    var localizationOptions = new RequestLocalizationOptions()
+        .AddSupportedCultures(supportedCultures!)
+        .AddSupportedUICultures(supportedCultures!);
+
+    return localizationOptions;
+}
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -47,12 +70,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
+app.UseRequestLocalization(GetLocalizationOptions());
 
 app.UseRouting();
 app.UseCors("CorsPolicy");
 
+app.MapControllers();
 app.MapBlazorHub();
 app.MapHub<ChatHub>("/chathub");
 app.MapHub<CounterHub>("/counterhub");
