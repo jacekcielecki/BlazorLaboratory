@@ -61,6 +61,15 @@ namespace BlazorLaboratory.BlazorServer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BLAB GLOBAL.
+        /// </summary>
+        public static string BLAB {
+            get {
+                return ResourceManager.GetString("BLAB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blazor Laboratory.
         /// </summary>
         public static string Blazor_Laboratory {
