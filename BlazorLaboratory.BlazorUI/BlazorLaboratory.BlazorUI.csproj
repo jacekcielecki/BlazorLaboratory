@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -20,15 +20,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FirebaseAuthentication.net" Version="4.0.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
-		<PackageReference Include="MudBlazor" Version="6.0.13" />
-		<PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
-		<PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
-		<PackageReference Include="StrawberryShake.Blazor" Version="13.5.0-preview.18" />
-		<PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.5.0-preview.18" />
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.7" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.7" />
+		<PackageReference Include="MudBlazor" Version="7.4.0" />
+		<PackageReference Include="Refit.HttpClientFactory" Version="7.1.2" />
+		<PackageReference Include="Refit.Newtonsoft.Json" Version="7.1.2" />
+		<PackageReference Include="StrawberryShake.Blazor" Version="13.9.8" />
+		<PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.9.8" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -30,9 +30,9 @@ public partial class GraphPage
             { "ButtonText", "Confirm" },
             { "ContentText", "Are you sure you want to delete selected course? This process cannot be undone." },
         };
-        var dialog = DialogService.Show<ConfirmationDialog>("Confirm Delete", parameters, dialogOptions);
+        var dialog = await DialogService.ShowAsync<ConfirmationDialog>("Confirm Delete", parameters, dialogOptions);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             try
             {

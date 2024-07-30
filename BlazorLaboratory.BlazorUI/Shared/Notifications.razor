@@ -12,7 +12,7 @@
         <MudDivider/>
         @if (_alerts.Any())
         {
-            <MudList Clickable="true" Class="overflow-scroll" Style="max-height: 300px;" Dense="true">
+            <MudList T="string" Clickable="true" Class="overflow-scroll" Style="max-height: 300px;" Dense="true">
                 @foreach (var alert in _alerts)
                 {
                     <MudListItem class="notification-item">
