@@ -1,0 +1,60 @@
+﻿@page "/autocomplete-test2"
+
+<h3>AutocompleteTest</h3>
+
+<MudAutocomplete 
+    Immediate="true"
+    T="FProduct?"
+    Value="product"
+    Style="width: 380px;"
+    Label="Product name*"
+    Placeholder="Product name"
+    Variant="Variant.Outlined"
+    AnchorOrigin="Origin.BottomCenter"
+    ValueChanged="value => OnProductNameChanged(value)"
+    Class="mr-3"
+    SearchFunc="@SearchProductNames"
+    ResetValueOnEmptyText="@true"
+    AdornmentIcon="@Icons.Material.Filled.Search"
+    ToStringFunc="@(fProduct => ToStringFunc(fProduct))" />
+    
+@code {
+    FProduct? product;
+
+    public class FProduct
+    {
+        public string? Name { get; set; }
+        public Guid Id { get; set; }
+    }
+
+    List<FProduct> _fullfillmentProducts = [
+        new FProduct{Id = Guid.NewGuid(), Name = "test1"},
+        new FProduct{Id = Guid.NewGuid(), Name = "adasd"},
+        new FProduct{Id = Guid.NewGuid(), Name = "test2"},
+        new FProduct{Id = Guid.NewGuid(), Name = "adsad"},
+        new FProduct{Id = Guid.NewGuid(), Name = "jacek test"},
+        new FProduct{Id = Guid.NewGuid(), Name = "jacek test"} //duplicate
+    ];
+
+    private Task<IEnumerable<FProduct>> SearchProductNames(string value, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return Task.FromResult(_fullfillmentProducts.AsEnumerable());
+
+        return Task.FromResult(_fullfillmentProducts
+            .Where(x => x.Name != null && x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)));
+    }
+
+    private string ToStringFunc(FProduct? fProduct)
+    {
+        return fProduct?.Name ?? "";
+    }
+
+    private void OnProductNameChanged(FProduct? value)
+    {
+        if (value != null)
+        {
+            product = _fullfillmentProducts.FirstOrDefault(x => x.Id == value.Id);
+        }
+    }
+}

@@ -1,0 +1,38 @@
+﻿@page "/autocomplete-test"
+
+<h3>AutocompleteTest</h3>
+
+<MudAutocomplete
+    For="() => name" 
+    Immediate="true"
+    T="string"
+    Value="name"
+    Style="width: 180px;"
+    Label="Product name*"
+    Placeholder="Product name"
+    Variant="Variant.Outlined"
+    AnchorOrigin="Origin.BottomCenter"
+    ValueChanged="value => OnProductNameChanged(value)"
+    Class="mr-3"
+    SearchFunc="@SearchProductNames"
+    ResetValueOnEmptyText="@true"
+    AdornmentIcon="@Icons.Material.Filled.Search" />
+    
+@code {
+    string[] fullfillmentProducts = ["test1", "adssda", "test2", "adhhh", "test1"]; //duplicate will throw a exception
+    string? name;
+
+    private Task<IEnumerable<string>> SearchProductNames(string value, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrEmpty(value))
+            return Task.FromResult(fullfillmentProducts.AsEnumerable());
+
+        return Task.FromResult(fullfillmentProducts
+            .Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase)));
+    }
+
+    private void OnProductNameChanged(string value)
+    {
+        name = fullfillmentProducts.FirstOrDefault(x => x == value);
+    }
+}
